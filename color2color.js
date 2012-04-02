@@ -1,5 +1,5 @@
 /*! 
-color2color v0.1 indyarmy.com
+color2color v0.2 indyarmy.com
 by Russ Porosky
 IndyArmy Network, Inc.
  */
@@ -176,7 +176,7 @@ IndyArmy Network, Inc.
 				},
 				{
 					re : /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d+(?:\.\d+)?|\.\d+)\s*\)/,
-					example: [ "rgb(123, 234, 45, 1)", "rgb(255,234,245, 0.5)" ],
+					example: [ "rgba(123, 234, 45, 1)", "rgba(255,234,245, 0.5)" ],
 					process: function ( bits ) {
 						return [
 							parseInt( bits[ 1 ], 10 ),
@@ -187,7 +187,47 @@ IndyArmy Network, Inc.
 					}
 				},
 				{
-					re: /^(\w{2})(\w{2})(\w{2})$/,
+					re: /^hsl\((\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%\)$/,
+					example: [ "hsl(120, 100%, 25%)", "hsl(0, 100%, 50%)" ],
+					process: function ( bits ) {
+						bits[ 4 ] = 1;
+						var rgba = hslToRgb( bits );
+						return [
+							rgba.r,
+							rgba.g,
+							rgba.b,
+							rgba.a
+						];
+					}
+				},
+				{
+					re : /^hsla\((\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%,\s*(\d+(?:\.\d+)?|\.\d+)\s*\)/,
+					example: [ "hsla(120, 100%, 25%, 1)", "hsla(0, 100%, 50%, 0.5)" ],
+					process: function ( bits ) {
+						var rgba = hslToRgb( bits );
+						return [
+							rgba.r,
+							rgba.g,
+							rgba.b,
+							rgba.a
+						];
+					}
+				},
+				{
+					re: /^hsv\((\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%\)$/,
+					example: [ "hsv(120, 100%, 25%)", "hsl(0, 100%, 50%)" ],
+					process: function ( bits ) {
+						var rgb = hsvToRgb( bits );
+						return [
+							rgb.r,
+							rgb.g,
+							rgb.b,
+							1
+						];
+					}
+				},
+				{
+					re: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
 					example: [ "#00ff00", "336699" ],
 					process: function ( bits ) {
 						return [
@@ -199,7 +239,7 @@ IndyArmy Network, Inc.
 					}
 				},
 				{
-					re: /^(\w{1})(\w{1})(\w{1})$/,
+					re: /^([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
 					example: [ "#fb0", "f0f" ],
 					process: function ( bits ) {
 						return [
@@ -211,7 +251,7 @@ IndyArmy Network, Inc.
 					}
 				}
 			],
-			r, g, b, a, key, i, re, processor, bits, channels, min, retcolor;
+			r, g, b, a, key, i, re, processor, bits, channels, min, hsl, hsv, retcolor;
 			for ( key in named_colors ) {
 				if ( color === key ) {
 					color = named_colors[ key ];
@@ -251,8 +291,183 @@ IndyArmy Network, Inc.
 				case "hex":
 					retcolor = "#" + r.toString( 16 ) + g.toString( 16 ) + b.toString( 16 );
 					break;
+				case "hsl":
+					hsl = rgbToHsl( { "r" : r, "g" : g, "b" : b } );
+					retcolor = "hsl(" + hsl.h + "," + hsl.s + "%," + hsl.l + "%)";
+					break;
+				case "hsla":
+					hsl = rgbToHsl( { "r" : r, "g" : g, "b" : b, "a" : a } );
+					retcolor = "hsl(" + hsl.h + "," + hsl.s + "%," + hsl.l + "%," + hsl.a + ")";
+					break;
+				case "hsv":
+					hsv = rgbToHsv( { "r" : r, "g" : g, "b" : b } );
+					retcolor = "hsv(" + hsv.h + "," + hsv.s + "%," + hsv.v + "%)";
+					break;
 			}
 			return retcolor;
+		},
+		hslToRgb = function( bits ) {
+			var rgba = {}, q, p, hsl = {
+				h : toPercent( parseInt( bits[ 1 ], 10 ) % 360, 360 ),
+				s : toPercent( parseInt( bits[ 2 ], 10 ) % 101, 100 ),
+				l : toPercent( parseInt( bits[ 3 ], 10 ) % 101, 100 ),
+				a : parseFloat( bits[ 4 ] )
+			};
+			if ( hsl.s === 0 ) {
+				rgba = {
+					r : hsl.l,
+					g : hsl.l,
+					b : hsl.l,
+					a : hsl.a
+				};
+			} else {
+				q = hsl.l < 0.5 ? hsl.l * ( 1 + hsl.s ) : hsl.l + hsl.s - hsl.l * hsl.s;
+				p = 2 * hsl.l - q;
+				rgba.r = parseInt( ( hueToRgb( p, q, hsl.h + 1 / 3 ) * 256 ).toFixed( 0 ), 10 );
+				rgba.g = parseInt( ( hueToRgb( p, q, hsl.h ) * 256 ).toFixed( 0 ), 10 );
+				rgba.b = parseInt( ( hueToRgb( p, q, hsl.h - 1 / 3 ) * 256 ).toFixed( 0 ), 10 );
+				rgba.a = hsl.a;
+			}
+			return rgba;
+		},
+		rgbToHsl = function( rgba ) {
+			rgba.r = toPercent( parseInt( rgba.r, 10 ) % 256, 256 );
+			rgba.g = toPercent( parseInt( rgba.g, 10 ) % 256, 256 );
+			rgba.b = toPercent( parseInt( rgba.b, 10 ) % 256, 256 );
+			var max = Math.max( rgba.r, rgba.g, rgba.b ),
+			min = Math.min( rgba.r, rgba.g, rgba.b ),
+			hsl = [],
+			d;
+			hsl.a = rgba.a;
+			hsl.l = ( max + min ) / 2;
+			if ( max === min ) {
+				hsl.h = 0;
+				hsl.s = 0;
+			} else {
+				d = max - min;
+				hsl.s = hsl.l > 0.5 ? d / ( 2 - max - min ) : d / ( max + min );
+				switch( max ) {
+					case rgba.r:
+						hsl.h = ( rgba.g - rgba.b ) / d + ( rgba.g < rgba.b ? 6 : 0 );
+						break;
+					case rgba.g:
+						hsl.h = ( rgba.b - rgba.r ) / d + 2;
+						break;
+					case rgba.b:
+						hsl.h = ( rgba.r - rgba.g ) / d + 4;
+						break;
+				}
+				hsl.h /= 6;
+			}
+			hsl.h = parseInt( ( hsl.h * 360 ).toFixed( 0 ), 10 );
+			hsl.s = parseInt( ( hsl.s * 100 ).toFixed( 0 ), 10 );
+			hsl.l = parseInt( ( hsl.l * 100 ).toFixed( 0 ), 10 );
+			return hsl;
+		},
+		hsvToRgb = function( bits ) {
+			var rgb = {},
+			hsv = {
+				h : toPercent( parseInt( bits[ 1 ], 10 ) % 360, 360 ),
+				s : toPercent( parseInt( bits[ 2 ], 10 ) % 101, 100 ),
+				v : toPercent( parseInt( bits[ 3 ], 10 ) % 101, 100 )
+			},
+			i = Math.floor( hsv.h * 6 ),
+			f = hsv.h * 6 - i,
+			p = hsv.v * ( 1 - hsv.s ),
+			q = hsv.v * ( 1 - f * hsv.s ),
+			t = hsv.v * ( 1 - ( 1 - f ) * hsv.s );
+			switch( i % 6 ) {
+				case 0:
+					rgb.r = hsv.v;
+					rgb.g = t;
+					rgb.b = p;
+					break;
+				case 1:
+					rgb.r = q;
+					rgb.g = hsv.v;
+					rgb.b = p;
+					break;
+				case 2:
+					rgb.r = p;
+					rgb.g = hsv.v;
+					rgb.b = t;
+					break;
+				case 3:
+					rgb.r = p;
+					rgb.g = q;
+					rgb.b = hsv.v;
+					break;
+				case 4:
+					rgb.r = t;
+					rgb.g = p;
+					rgb.b = hsv.v;
+					break;
+				case 5:
+					rgb.r = hsv.v;
+					rgb.g = p;
+					rgb.b = q;
+					break;
+			}
+			rgb.r = parseInt( rgb.r * 256, 10 );
+			rgb.g = parseInt( rgb.g * 256, 10 );
+			rgb.b = parseInt( rgb.b * 256, 10 );
+			return {
+				"r" : rgb.r,
+				"g" : rgb.g,
+				"b" : rgb.b
+			};
+		},
+		rgbToHsv = function( rgba ) {
+			rgba.r = toPercent( parseInt( rgba.r, 10 ) % 256, 256 );
+			rgba.g = toPercent( parseInt( rgba.g, 10 ) % 256, 256 );
+			rgba.b = toPercent( parseInt( rgba.b, 10 ) % 256, 256 );
+			var max = Math.max( rgba.r, rgba.g, rgba.b ),
+			min = Math.min( rgba.r, rgba.g, rgba.b ),
+			d = max - min,
+			hsv = {
+				"h" : 0,
+				"s" : max === 0 ? 0 : d / max,
+				"v" : max
+			};
+			if( max !== min ) {
+				switch( max ) {
+					case rgba.r:
+						hsv.h = ( rgba.g - rgba.b ) / d + ( rgba.g < rgba.b ? 6 : 0 );
+						break;
+					case rgba.g:
+						hsv.h = ( rgba.b - rgba.r ) / d + 2;
+						break;
+					case rgba.b:
+						hsv.h = ( rgba.r - rgba.g ) / d + 4;
+						break;
+				}
+				hsv.h /= 6;
+			}
+			hsv.h = parseInt( ( hsv.h * 360 ).toFixed( 0 ), 10 );
+			hsv.s = parseInt( ( hsv.s * 100 ).toFixed( 0 ), 10 );
+			hsv.v = parseInt( ( hsv.v * 100 ).toFixed( 0 ), 10 );
+			return hsv;
+		},
+		hueToRgb = function( p, q, t ) {
+			if ( t < 0 ) {
+				t += 1;
+			}
+			if ( t > 1 ) {
+				t -= 1;
+			}
+			if ( t < 1 / 6 ) {
+				return p + ( q - p ) * 6 * t;
+			}
+			if ( t < 1 / 2 ) {
+				return q;
+			}
+			if ( t < 2 / 3 ) {
+				return p + ( q - p ) * ( 2 / 3 - t ) * 6;
+			}
+			return p;
+		},
+		toPercent = function( amount, limit ) {
+			return amount / limit;
 		};
 		return color2color;
 	} )();
