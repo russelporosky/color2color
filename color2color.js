@@ -173,10 +173,11 @@ IndyArmy Network, Inc.
 				a : parseFloat( bits[ 4 ] )
 			};
 			if ( hsl.s === 0 ) {
+				var v = parseInt(Math.round(255*hsl.l));
 				rgba = {
-					r : hsl.l,
-					g : hsl.l,
-					b : hsl.l,
+					r : v,
+					g : v,
+					b : v,
 					a : hsl.a
 				};
 			} else {
