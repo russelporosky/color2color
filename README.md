@@ -37,3 +37,7 @@ The final argument (optional) will include a calculated opacity against white if
 ### v0.2
 
 * added HSL, HSLA and HSV sources and targets
+
+### License
+
+[MIT](http://en.wikipedia.org/wiki/MIT_License)

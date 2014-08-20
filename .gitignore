@@ -42,3 +42,6 @@ publish
 build/buildinfo.properties
 build/config/buildinfo.properties
 
+#folders
+node_modules
+bower_components
