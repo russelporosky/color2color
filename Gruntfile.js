@@ -4,10 +4,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
       karma: {
 				unit: {
-					configFile: 'test/karma.conf.js',
-					options: {
-						files: ['test/specs/**/*.js']
-					}
+					configFile: 'test/karma.conf.js'
 				}
 			},
 			uglify: {

@@ -11,19 +11,23 @@ module.exports = function(config) {
     autoWatch: true,
 
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-    files: ['../color2color.js'],
+    files: [
+			'color2color.js',
+			'test/specs/**/*.js'
+		],
 
     // list of files / patterns to exclude
     exclude: [],
 
     // web server port
-    port: 8080,
+    port: 9876,
+		runnerPort: 9100,
 
     // Start these browsers, currently available:
     // - Chrome
@@ -33,14 +37,14 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: [
-      'PhantomJS'
-    ],
+    browsers: ['PhantomJS'],
+		reporters: ['progress', 'brackets'],
 
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+			'karma-brackets'
     ],
 
     // Continuous Integration mode
