@@ -1,0 +1,23 @@
+{
+  "name": "color2color",
+  "main": "color2color.js",
+  "version": "0.2.1",
+  "homepage": "http://indyarmy.com/color2color/",
+  "authors": [
+    "Russ Porosky <indyarmy@gmail.com>"
+  ],
+  "description": "The color2color function simply converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.",
+  "keywords": [
+    "color",
+    "javascript",
+    "converter"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
