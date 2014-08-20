@@ -1,0 +1,10 @@
+{
+  "name": "color2color",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.2",
+		"grunt-contrib-uglify": "~0.2.7",
+    "grunt-karma": "^0.8.3"
+  }
+}
