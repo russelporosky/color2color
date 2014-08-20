@@ -20,13 +20,11 @@ module.exports = function (grunt) {
     });
 
     // These plugins provide necessary tasks
-   	//karma-test
 		grunt.loadNpmTasks('grunt-karma');
-		//clear
-		//minify
+		grunt.loadNpmTasks('grunt-contrib-uglify');
 	
     // Default task
 		grunt.registerTask('test', ['karma']);
-    grunt.registerTask('default', ['clear', 'uglify']);
+    grunt.registerTask('build', ['uglify']);
 };
 
