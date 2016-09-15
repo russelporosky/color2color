@@ -1,5 +1,6 @@
 ### v1.0.0
 * NPM and Bower installable
+** package and script name is now `colorcolor` to avoid conflict
 
 ### v0.2.1
 #### All the below fixes thanks to [*Kevin Jett*](https://github.com/kevjett/)

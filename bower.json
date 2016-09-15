@@ -1,12 +1,12 @@
 {
-	"name": "color2color",
+	"name": "colorcolor",
 	"version": "1.0.0",
 	"homepage": "http://metaloha.github.io/color2color/",
 	"authors": [
 		"Russel Porosky <russel@metaloha.com>"
 	],
-	"description": "color2color converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.",
-	"main": "color2color.js",
+	"description": "colorcolor converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.",
+	"main": "colorcolor.js",
 	"keywords": [
 		"color",
 		"convert"
