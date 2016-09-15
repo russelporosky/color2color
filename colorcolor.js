@@ -135,7 +135,7 @@
 					break;
 				case "hsla":
 					hsl = rgbToHsl({ "r": r, "g": g, "b": b, "a": a });
-					retcolor = "hsl(" + hsl.h + "," + hsl.s + "%," + hsl.l + "%," + hsl.a + ")";
+					retcolor = "hsla(" + hsl.h + "," + hsl.s + "%," + hsl.l + "%," + hsl.a + ")";
 					break;
 				case "hsv":
 					hsv = rgbToHsv({ "r": r, "g": g, "b": b });
