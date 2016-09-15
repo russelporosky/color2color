@@ -1,13 +1,13 @@
 /*!
- color2color v1.0.0 Metaloha
+ colorcolor v1.0.1 Metaloha
  by Russel Porosky
  Metaloha
  */
 
 ;(function (window, undefined) {
 	"use strict";
-	var color2color = (function () {
-		var color2color = function (color, newColor, calculateOpacity) {
+	var colorcolor = (function () {
+		var colorcolor = function (color, newColor, calculateOpacity) {
 			if (!newColor) {
 				newColor = "rgba";
 			}
@@ -451,7 +451,7 @@
 
 			return namedColor;
 		};
-		return color2color;
+		return colorcolor;
 	})();
-	window.color2color = color2color;
+	window.colorcolor = colorcolor;
 })(window);

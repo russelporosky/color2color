@@ -1,3 +1,6 @@
+### v1.0.1
+* updated all occurences of `color2color` to `colorcolor`
+
 ### v1.0.0
 * NPM and Bower installable
 ** package and script name is now `colorcolor` to avoid conflict

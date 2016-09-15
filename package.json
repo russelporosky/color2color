@@ -1,6 +1,6 @@
 {
   "name": "colorcolor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "colorcolor converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.",
   "main": "colorcolor.js",
   "scripts": {
