@@ -106,3 +106,5 @@ local.properties
 .texlipse
 .springBeans
 .recommenders/
+
+npm-debug.log

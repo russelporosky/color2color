@@ -1,8 +1,8 @@
 {
-  "name": "color2color",
+  "name": "colorcolor",
   "version": "1.0.0",
-  "description": "color2color converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.",
-  "main": "color2color.js",
+  "description": "colorcolor converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.",
+  "main": "colorcolor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
