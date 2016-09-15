@@ -1,0 +1,23 @@
+{
+  "name": "color2color",
+  "version": "1.0.0",
+  "description": "color2color converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.",
+  "main": "color2color.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metaloha/color2color.git"
+  },
+  "keywords": [
+    "color",
+    "convert"
+  ],
+  "author": "Russel Porosky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/metaloha/color2color/issues"
+  },
+  "homepage": "https://github.com/metaloha/color2color/issues#readme"
+}
