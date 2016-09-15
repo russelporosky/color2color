@@ -1,106 +1,104 @@
 <!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
-<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		<title>color2color Javascript Demo</title>
-		<meta name="description" content="A Javascript color conversion function.">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script src="color2color.min.js"></script>
-		<style type="text/css">
-			body {
-				background-color: #eee;
-				color: #222;
-				font: 1.1em/1.4em Verdana,Helvetica,sans-serif;
-			}
-			body > header, article {
-				margin: 0 auto;
-				width: 85%;
-			}
-			article {
-				padding: 0 4em;
-			}
-			h1 {
-				font-size: 2em;
-				margin: 0.4em 0;
-			}
-			h2 {
-				font-size: 1.6em;
-				margin: 0.4em 0;
-			}
-			h3 {
-				font-size: 1.1em;
-				margin: 0.4em 0;
-			}
-			article h2 {
-				margin-top: 1em;
-			}
-			p {
-				margin-bottom: 0.8em;
-			}
-			code {
-				font-size: 1.3em;
-			}
-			ul {
-				margin: 0 0 0.8em 1em;
-			}
-		</style>
-	</head>
-	<body>
-		<header>
-			<hgroup>
-				<h1>color2color Javascript Function</h1>
-				<h2>Version 0.2, Released 2012/04/02</h2>
-				<h3><a href="http://www.gnu.org/licenses/gpl.html">GPL v3</a>, Copyright 2012 IndyArmy Network, Inc.</h3>
-			</hgroup>
-		</header>
-		<article>
-			<header>
-				<h2>Description</h2>
-			</header>
-			<p><strong>color2color</strong> converts a color string in any CSS format (RGB, RGBA, Hex, HSL, HSLA, or HSV) into another format (also RGB, RGBA, Hex, HSL, HSLA, or HSV).</p>
-		</article>
-		<article>
-			<header>
-				<h2>Usage</h2>
-			</header>
-			<p><code>color2color( <em>string originalColor</em>, [<em>string newColorType( <strong>rgba</strong>|hex|rgb|hsl|hsla|hsv )</em>], [<em>bool calculateOpacity( <strong>false</strong>|true</em> )]</code></p>
-			<p>The first argument is the original color string in RGB, RGBA, Hex, HSL, HSLA, or HSV format.</p>
-			<p>The second argument (optional) is which format you'd like the new color string to be in. This will always default to <code>"rgba"</code>.</p>
-			<p>The final argument (optional) will include a calculated opacity against white if the second argument is <code>"rgba"</code>.</p>
-		</article>
-		<article>
-			<header>
-				<h2>Examples</h2>
-			</header>
-			<p><code>var newColor = color2color( "#dfe" ); // Returns "<span id="c2c1"></span>"</code></p>
-			<p><code>var newColor = color2color( "#036", "rgb" ); // Returns "<span id="c2c2"></span>"</code></p>
-			<p><code>var newColor = color2color( "rgba(64,64,64,0.5)" ); // Returns "<span id="c2c3"></span>"</code></p>
-			<p><code>var newColor = color2color( "rgb(64,64,64)", "hex" ); // Returns "<span id="c2c4"></span>"</code></p>
-			<p><code>var newColor = color2color( "#dfe", "rgba", true ); // Returns "<span id="c2c5"></span>"</code></p>
-			<p><code>var newColor = color2color( "hsla(109,100%,37%,1)" ); // Returns "<span id="c2c6"></span>"</code></p>
-			<p><code>var newColor = color2color( "rgba(35,189,0,0.75)", "hsl" ); // Returns "<span id="c2c7"></span>"</code></p>
-		</article>
-		<article>
-			<header>
-				<h2>Release Notes</h2>
-			</header>
-			<p><a href="http://github.com/indyarmy/color2color">GitHub Repository</a></p>
-			<p>This should work pretty much anywhere, actually. As long as the browser supports Javascript, at least.</p>
-		</article>
-		<script>
-			$(document).ready(function(){
-				$( "#c2c1" ).html( color2color( "#dfe" ) );
-				$( "#c2c2" ).html( color2color( "#036", "rgb" ) );
-				$( "#c2c3" ).html( color2color( "rgba(64,64,64,0.5)" ) );
-				$( "#c2c4" ).html( color2color( "rgb(64,64,64)", "hex" ) );
-				$( "#c2c5" ).html( color2color( "#dfe", "rgba", true ) );
-				$( "#c2c6" ).html( color2color( "hsla(109,100%,37%,1)" ) );
-				$( "#c2c7" ).html( color2color( "rgba(35,189,0,0.75)", "hsl" ) );
-			});
-		</script>
-	</body>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>color2color Javascript Demo</title>
+	<meta name="description" content="A Javascript color conversion function.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script src="color2color.js"></script>
+	<style type="text/css">
+		body {
+			background-color: #eee;
+			color: #222;
+			font: 1.1em/1.4em Verdana,Helvetica,sans-serif;
+		}
+		body > header, article {
+			margin: 0 auto;
+			width: 85%;
+		}
+		article {
+			padding: 0 4em;
+		}
+		h1 {
+			font-size: 2em;
+			margin: 0.4em 0;
+		}
+		h2 {
+			font-size: 1.6em;
+			margin: 0.4em 0;
+		}
+		h3 {
+			font-size: 1.1em;
+			margin: 0.4em 0;
+		}
+		article h2 {
+			margin-top: 1em;
+		}
+		p {
+			margin-bottom: 0.8em;
+		}
+		code {
+			font-size: 1.3em;
+		}
+		ul {
+			margin: 0 0 0.8em 1em;
+		}
+	</style>
+</head>
+<body>
+<header>
+	<hgroup>
+		<h1>color2color Javascript Function</h1>
+		<h2>Version 1.0.0, Released 2016/09/15</h2>
+		<h3><a href="https://opensource.org/licenses/MIT">MIT</a>, Copyright 2016 Metaloha</h3>
+	</hgroup>
+</header>
+<article>
+	<header>
+		<h2>Description</h2>
+	</header>
+	<p><strong>color2color</strong> converts a color string in any CSS format (RGB, RGBA, Hex, HSL, HSLA, or HSV) into another format (also RGB, RGBA, Hex, HSL, HSLA, or HSV).</p>
+</article>
+<article>
+	<header>
+		<h2>Usage</h2>
+	</header>
+	<p><code>color2color( <em>string originalColor</em>, [<em>string newColorType( <strong>rgba</strong>|hex|rgb|hsl|hsla|hsv )</em>], [<em>bool calculateOpacity( <strong>false</strong>|true</em> )]</code></p>
+	<p>The first argument is the original color string in RGB, RGBA, Hex, HSL, HSLA, or HSV format.</p>
+	<p>The second argument (optional) is which format you'd like the new color string to be in. This will always default to <code>"rgba"</code>.</p>
+	<p>The final argument (optional) will include a calculated opacity against white if the second argument is <code>"rgba"</code>.</p>
+</article>
+<article>
+	<header>
+		<h2>Examples</h2>
+	</header>
+	<p><code>var newColor = color2color( "#dfe" ); // Returns "<span id="c2c1"></span>"</code></p>
+	<p><code>var newColor = color2color( "#036", "rgb" ); // Returns "<span id="c2c2"></span>"</code></p>
+	<p><code>var newColor = color2color( "rgba(64,64,64,0.5)" ); // Returns "<span id="c2c3"></span>"</code></p>
+	<p><code>var newColor = color2color( "rgb(64,64,64)", "hex" ); // Returns "<span id="c2c4"></span>"</code></p>
+	<p><code>var newColor = color2color( "#dfe", "rgba", true ); // Returns "<span id="c2c5"></span>"</code></p>
+	<p><code>var newColor = color2color( "hsla(109,100%,37%,1)" ); // Returns "<span id="c2c6"></span>"</code></p>
+	<p><code>var newColor = color2color( "rgba(35,189,0,0.75)", "hsl" ); // Returns "<span id="c2c7"></span>"</code></p>
+</article>
+<article>
+	<header>
+		<h2>Release Notes</h2>
+	</header>
+	<p><a href="http://github.com/metaloha/color2color">GitHub Repository</a></p>
+	<p>This should work pretty much anywhere, actually. As long as the browser supports Javascript, at least.</p>
+</article>
+<script>
+	$(document).ready(function(){
+		$( "#c2c1" ).html( color2color( "#dfe" ) );
+		$( "#c2c2" ).html( color2color( "#036", "rgb" ) );
+		$( "#c2c3" ).html( color2color( "rgba(64,64,64,0.5)" ) );
+		$( "#c2c4" ).html( color2color( "rgb(64,64,64)", "hex" ) );
+		$( "#c2c5" ).html( color2color( "#dfe", "rgba", true ) );
+		$( "#c2c6" ).html( color2color( "hsla(109,100%,37%,1)" ) );
+		$( "#c2c7" ).html( color2color( "rgba(35,189,0,0.75)", "hsl" ) );
+	});
+</script>
+</body>
 </html>
