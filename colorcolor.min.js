@@ -1,5 +1,5 @@
 /*!
- colorcolor v1.0.0 Metaloha
+ colorcolor v1.0.1 Metaloha
  by Russel Porosky
  Metaloha
  */
