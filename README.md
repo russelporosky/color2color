@@ -1,10 +1,10 @@
 # color2color - Javascript Function
 
-The color2color function simply converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.
+The color2color function converts Hex/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/RGB/RGBA/HSL/HSLA/HSV color strings.
 
 ## Demo
 
-[http://indyarmy.com/color2color/](http://indyarmy.com/color2color/)
+[http://metaloha.github.io/color2color/](http://metaloha.github.io/color2color/)
 
 ## Usage
 
@@ -25,15 +25,3 @@ The final argument (optional) will include a calculated opacity against white if
 	var newColor = color2color( "#dfe", "rgba", true ); // Returns "rgba(0,255,128,0.1333)"
 	var newColor = color2color( "hsla(109,100%,37%,1)" ); // Returns "rgba(35,189,0,1)"
 	var newColor = color2color( "rgba(35,189,0,0.75)", "hsl" ); // Returns "hsl(109,100%,37%)"
-
-## Changelog
-
-### v0.2.1
-#### All the below fixes thanks to [*Kevin Jett*](https://github.com/kevjett/)
-* 3 character color names now not accidentally converted to hex
-* corrected HSL to RGB saturation miscalculation
-* fixed incorrect hex expansion when one or more of the original hex values were single-digit
-
-### v0.2
-
-* added HSL, HSLA and HSV sources and targets

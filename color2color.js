@@ -1,7 +1,7 @@
-/*! 
- color2color v0.2.1 indyarmy.com
- by Russ Porosky
- IndyArmy Network, Inc.
+/*!
+ color2color v1.0.0 Metaloha
+ by Russel Porosky
+ Metaloha
  */
 
 ;(function (window, undefined) {
