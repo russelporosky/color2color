@@ -1,7 +1,7 @@
 {
 	"name": "color2color",
 	"version": "1.0.0",
-	"homepage": "https://github.com/metaloha/color2color/",
+	"homepage": "http://metaloha.github.io/color2color/",
 	"authors": [
 		"Russel Porosky <russel@metaloha.com>"
 	],
@@ -16,7 +16,6 @@
 		"**/.*",
 		"node_modules",
 		"bower_components",
-		"test",
 		"tests"
 	]
 }
