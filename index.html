@@ -4,10 +4,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>colorcolor Javascript Demo</title>
-	<meta name="description" content="A Javascript color conversion function.">
+	<meta name="description" content="A Javascript color string conversion function.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<script src="colorcolor.js"></script>
+	<script src="colorcolor.min.js"></script>
 	<style type="text/css">
 		body {
 			background-color: #eee;
@@ -51,7 +51,7 @@
 <header>
 	<hgroup>
 		<h1>colorcolor Javascript Function</h1>
-		<h2>Version 1.0.1, Released 2016/09/15</h2>
+		<h2>Version 1.1.0, Released 2016/09/16</h2>
 		<h3><a href="https://opensource.org/licenses/MIT">MIT</a>, Copyright 2016 Metaloha</h3>
 	</hgroup>
 </header>
@@ -63,12 +63,22 @@
 </article>
 <article>
 	<header>
+		<h2>Install</h2>
+	</header>
+	<p><code>colorcolor</code> is available via NPM:</p>
+	<p><code>npm install colorcolor</code></p>
+	<p>And Bower:</p>
+	<p><code>bower install colorcolor</code></p>
+	<p>Of course, you can also just download the minified distribution file from here instead if you prefer :)</p>
+</article>
+<article>
+	<header>
 		<h2>Usage</h2>
 	</header>
 	<p><code>colorcolor( <em>string originalColor</em>, [<em>string newColorType( <strong>rgba</strong>|hex|rgb|hsl|hsla|hsv )</em>], [<em>bool calculateOpacity( <strong>false</strong>|true</em> )]</code></p>
 	<p>The first argument is the original color string in RGB, RGBA, Hex, HSL, HSLA, or HSV format.</p>
 	<p>The second argument (optional) is which format you'd like the new color string to be in. This will always default to <code>"rgba"</code>.</p>
-	<p>The final argument (optional) will include a calculated opacity against white if the second argument is <code>"rgba"</code>.</p>
+	<p>The final argument (optional) will include a calculated opacity against white if the second argument is <code>"rgba"</code>, <code>"hexa"</code>, or <code>"hsla"</code>.</p>
 </article>
 <article>
 	<header>
@@ -89,6 +99,12 @@
 	</header>
 	<p><a href="http://github.com/metaloha/color2color">GitHub Repository</a></p>
 	<p>This should work pretty much anywhere, actually. As long as the browser supports Javascript, at least.</p>
+</article>
+<article>
+	<header>
+		<h2>Testing</h2>
+	</header>
+	<p>You can run <code>grunt test</code> to run the tests alone. The testing will also run after every change made while <code>grunt dev</code> is watching for changes, and if you run <code>grunt</code> with no arguments they run yet again.</p>
 </article>
 <script>
 	$(document).ready(function(){
