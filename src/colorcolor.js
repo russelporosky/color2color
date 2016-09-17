@@ -85,7 +85,17 @@ function colorcolor(color, newColor = "rgba", calculateOpacity = false) {
 		},
 		hsv: {
 			re: /^hsv\((\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%\)$/,
-			example: [ "hsv(120, 100%, 25%)", "hsl(0, 100%, 50%)" ],
+			example: [ "hsv(120, 100%, 25%)", "hsv(0, 100%, 50%)" ],
+			toRGBA: function (bits) {
+				var rgb = hsvToRgb(bits);
+				return [
+					rgb.r, rgb.g, rgb.b, 1
+				];
+			}
+		},
+		hsb: {
+			re: /^hsb\((\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%\)$/,
+			example: [ "hsb(120, 100%, 25%)", "hsb(0, 100%, 50%)" ],
 			toRGBA: function (bits) {
 				var rgb = hsvToRgb(bits);
 				return [
@@ -118,11 +128,10 @@ function colorcolor(color, newColor = "rgba", calculateOpacity = false) {
 			a = +(Math.round(channels[3] + ("e+" + roundTo)) + ("e-" + roundTo));
 		}
 	}
-	r = ( r < 0 || isNaN(r) ) ? 0 : ( ( r > 255 ) ? 255 : r );
-	g = ( g < 0 || isNaN(g) ) ? 0 : ( ( g > 255 ) ? 255 : g );
-	b = ( b < 0 || isNaN(b) ) ? 0 : ( ( b > 255 ) ? 255 : b );
+	r = Math.round( ( r < 0 || isNaN(r) ) ? 0 : ( ( r > 255 ) ? 255 : r ) );
+	g = Math.round( ( g < 0 || isNaN(g) ) ? 0 : ( ( g > 255 ) ? 255 : g ) );
+	b = Math.round( ( b < 0 || isNaN(b) ) ? 0 : ( ( b > 255 ) ? 255 : b ) );
 	a = ( a < 0 || isNaN(a) ) ? 0 : ( ( a > 1 ) ? 1 : a );
-	//console.log("COLOR:",r,g,b,a);
 
 	switch (newColor) {
 		case "hex":
@@ -144,6 +153,11 @@ function colorcolor(color, newColor = "rgba", calculateOpacity = false) {
 			}
 			let hsla = rgbToHsl({ "r": r, "g": g, "b": b, "a": a });
 			returnedColor = `hsla(${hsla.h},${hsla.s}%,${hsla.l}%,${hsla.a})`;
+			break;
+		case "hsb":
+			/* Same as `hsv` */
+			let hsb = rgbToHsv({ "r": r, "g": g, "b": b });
+			returnedColor = `hsb(${hsb.h},${hsb.s}%,${hsb.v}%)`;
 			break;
 		case "hsv":
 			let hsv = rgbToHsv({ "r": r, "g": g, "b": b });
@@ -178,14 +192,14 @@ function calculateOpacityFromWhite(r, g, b, a) {
 }
 
 function hslToRgb(bits) {
-	var rgba = {}, v, q, p, hsl = {
-		h: toPercent(parseInt(bits[ 1 ], 10) % 360, 360),
-		s: toPercent(parseInt(bits[ 2 ], 10) % 101, 100),
-		l: toPercent(parseInt(bits[ 3 ], 10) % 101, 100),
+	var rgba = {}, hsl = {
+		h: bits[1] / 360,
+		s: bits[2] / 100,
+		l: bits[3] / 100,
 		a: parseFloat(bits[ 4 ])
 	};
 	if (hsl.s === 0) {
-		v = parseInt(Math.round(255 * hsl.l));
+		let v = 255 * hsl.l;
 		rgba = {
 			r: v,
 			g: v,
@@ -193,11 +207,11 @@ function hslToRgb(bits) {
 			a: hsl.a
 		};
 	} else {
-		q = hsl.l < 0.5 ? hsl.l * ( 1 + hsl.s ) : hsl.l + hsl.s - hsl.l * hsl.s;
-		p = 2 * hsl.l - q;
-		rgba.r = parseInt((hueToRgb(p, q, hsl.h + 1 / 3) * 256).toFixed(0), 10);
-		rgba.g = parseInt((hueToRgb(p, q, hsl.h) * 256).toFixed(0), 10);
-		rgba.b = parseInt((hueToRgb(p, q, hsl.h - 1 / 3) * 256).toFixed(0), 10);
+		let q = hsl.l < 0.5 ? hsl.l * ( 1 + hsl.s ) : ( hsl.l + hsl.s ) - ( hsl.l * hsl.s );
+		let p = 2 * hsl.l - q;
+		rgba.r = hueToRgb(p, q, hsl.h + ( 1 / 3 ) ) * 255;
+		rgba.g = hueToRgb(p, q, hsl.h) * 255;
+		rgba.b = hueToRgb(p, q, hsl.h - ( 1 / 3 ) ) * 255;
 		rgba.a = hsl.a;
 	}
 
@@ -205,9 +219,9 @@ function hslToRgb(bits) {
 }
 
 function rgbToHsl(rgba) {
-	rgba.r = toPercent(parseInt(rgba.r, 10) % 256, 256);
-	rgba.g = toPercent(parseInt(rgba.g, 10) % 256, 256);
-	rgba.b = toPercent(parseInt(rgba.b, 10) % 256, 256);
+	rgba.r = rgba.r / 255;
+	rgba.g = rgba.g / 255;
+	rgba.b = rgba.b / 255;
 	var max = Math.max(rgba.r, rgba.g, rgba.b), min = Math.min(rgba.r, rgba.g, rgba.b), hsl = [], d;
 	hsl.a = rgba.a;
 	hsl.l = ( max + min ) / 2;
@@ -216,7 +230,7 @@ function rgbToHsl(rgba) {
 		hsl.s = 0;
 	} else {
 		d = max - min;
-		hsl.s = hsl.l > 0.5 ? d / ( 2 - max - min ) : d / ( max + min );
+		hsl.s = hsl.l >= 0.5 ? d / ( 2 - max - min ) : d / ( max + min );
 		switch (max) {
 			case rgba.r:
 				hsl.h = ( rgba.g - rgba.b ) / d + ( rgba.g < rgba.b ? 6 : 0 );
@@ -239,9 +253,9 @@ function rgbToHsl(rgba) {
 
 function hsvToRgb(bits) {
 	var rgb = {}, hsv = {
-		h: toPercent(parseInt(bits[ 1 ], 10) % 360, 360),
-		s: toPercent(parseInt(bits[ 2 ], 10) % 101, 100),
-		v: toPercent(parseInt(bits[ 3 ], 10) % 101, 100)
+		h: bits[1] / 360,
+		s: bits[2] / 100,
+		v: bits[3] / 100
 	}, i = Math.floor(hsv.h * 6), f = hsv.h * 6 - i, p = hsv.v * ( 1 - hsv.s ), q = hsv.v * ( 1 - f * hsv.s ), t = hsv.v * ( 1 - ( 1 - f ) * hsv.s );
 	switch (i % 6) {
 		case 0:
@@ -275,15 +289,11 @@ function hsvToRgb(bits) {
 			rgb.b = q;
 			break;
 	}
-	rgb.r = parseInt(rgb.r * 256, 10);
-	rgb.g = parseInt(rgb.g * 256, 10);
-	rgb.b = parseInt(rgb.b * 256, 10);
+	rgb.r = rgb.r * 255;
+	rgb.g = rgb.g * 255;
+	rgb.b = rgb.b * 255;
 
-	return {
-		"r": rgb.r,
-		"g": rgb.g,
-		"b": rgb.b
-	};
+	return rgb;
 }
 
 function rgbToHsv(rgba) {
@@ -330,7 +340,7 @@ function hueToRgb(p, q, t) {
 		return q;
 	}
 	if (t < 2 / 3) {
-		return p + ( q - p ) * ( 2 / 3 - t ) * 6;
+		return p + ( q - p ) * ( ( 2 / 3 - t ) * 6 );
 	}
 
 	return p;

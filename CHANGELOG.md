@@ -1,3 +1,8 @@
+## v1.1.1
+* fixed some rounding issues with the HSL/HSV conversions
+* added HSB (identical to HSB)
+* improved testing (and made it a little worse at the same time due to the lack of 1-to-1 mapping from HSL/HSV/HSB to RGB)
+
 ## v1.1.0
 * refactored to more modern JS standards
 * added Grunt to automate minifying and hinting

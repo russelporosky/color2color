@@ -1,6 +1,6 @@
 # colorcolor - Javascript Function
 
-The colorcolor function converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV color strings.
+The colorcolor function converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings.
 
 ## Demo
 
