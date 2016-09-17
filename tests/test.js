@@ -3,90 +3,82 @@ var colorcolor = require("../");
 
 describe("colorcolor Color String Converter", function() {
 	"use strict";
-	describe("hex to RGB[A] conversion", function() {
-		it("should return rgba(221,255,238,1)", function() {
-			assert.equal("rgba(221,255,238,1)", colorcolor("#dfe"));
+	describe("#dfea to", function() {
+		it("hex should return #ddffee", function() {
+			assert.equal("#ddffee", colorcolor("#dfea", "hex"));
 		});
-		it("should return rgba(221,255,238,0.6667)", function() {
-			assert.equal("rgba(221,255,238,0.6667)", colorcolor("#dfea"));
+		it("hexa should return #ddffeeaa", function() {
+			assert.equal("#ddffeeaa", colorcolor("#dfea", "hexa"));
 		});
-		it("should return rgba(0,255,128,0.1333)", function() {
-			assert.equal("rgba(0,255,128,0.1333)", colorcolor("#dfe", "rgba", true));
+		it("rgb should return rgb(221,255,238)", function() {
+			assert.equal("rgb(221,255,238)", colorcolor("#dfea", "rgb"));
 		});
-		it("should return rgb(0,51,102)", function() {
-			assert.equal("rgb(0,51,102)", colorcolor("#036", "rgb"));
+		it("rgba should return rgba(221,255,238,0.6667)", function() {
+			assert.equal("rgba(221,255,238,0.6667)", colorcolor("#dfea", "rgba"));
 		});
-		it("should return rgb(0,51,102)", function() {
-			assert.equal("rgb(0,51,102)", colorcolor("#003366a1", "rgb"));
+		it("hsl should return hsl(150,100%,93%)", function() {
+			assert.equal("hsl(150,100%,93%)", colorcolor("#dfea", "hsl"));
 		});
-	});
-	describe("RGB[A] to hex[a] conversion", function() {
-		it("should return #404040ff", function() {
-			assert.equal("#404040ff", colorcolor("rgb(64,64,64)", "hexa"));
+		it("hsla should return hsla(150,100%,93%,0.6667)", function() {
+			assert.equal("hsla(150,100%,93%,0.6667)", colorcolor("#dfea", "hsla"));
 		});
-		it("should return #40404080", function() {
-			assert.equal("#40404080", colorcolor("rgba(64,64,64,.5)", "hexa"));
+		it("hsv should return hsv(150,13%,100%)", function() {
+			assert.equal("hsv(150,13%,100%)", colorcolor("#dfea", "hsv"));
 		});
-		it("should return #000000bf", function() {
-			assert.equal("#000000bf", colorcolor("rgba(64,64,64,.5)", "hexa", true));
-		});
-		it("should return #404040", function() {
-			assert.equal("#404040", colorcolor("rgb(64,64,64)", "hex"));
-		});
-		it("should return #404040", function() {
-			assert.equal("#404040", colorcolor("rgba(64,64,64,.5)", "hex"));
+		it("hsb should return hsb(150,13%,100%)", function() {
+			assert.equal("hsb(150,13%,100%)", colorcolor("#dfea", "hsb"));
 		});
 	});
-	describe("HSL[A] to RGB[A] conversion", function() {
-		it("should return rgba(35,189,0,1)", function() {
-			assert.equal("rgba(35,189,0,1)", colorcolor("hsla(109,100%,37%,1)"));
+	describe("convert back to hex (HS[l|v|b] lacks precision)", function() {
+		it("#ddffee should return #ddffee", function() {
+			assert.equal("#ddffee", colorcolor("#ddffee", "hex"));
 		});
-		it("should return rgba(35,189,0,1)", function() {
-			assert.equal("rgba(35,189,0,1)", colorcolor("hsl(109,100%,37%)"));
+		it("#ddffeeaa should return #ddffee", function() {
+			assert.equal("#ddffee", colorcolor("#ddffeeaa", "hex"));
 		});
-	});
-	describe("hex to HSL[A] conversion", function() {
-		it("should return hsla(170,45%,45%,1)", function() {
-			assert.equal("hsla(170,45%,45%,1)", colorcolor("#3fa796", "hsla"));
+		it("rgb(221,255,238) should return #ddffee", function() {
+			assert.equal("#ddffee", colorcolor("rgb(221,255,238)", "hex"));
 		});
-		it("should return hsla(150,94%,93%,0.6667)", function() {
-			assert.equal("hsla(150,94%,93%,0.6667)", colorcolor("#dfea", "hsla"));
+		it("rgba(221,255,2380.6667) should return #ddffee", function() {
+			assert.equal("#ddffee", colorcolor("rgba(221,255,238,0.6667)", "hex"));
 		});
-		it("should return hsla(170,100%,27%,0.7529)", function() {
-			assert.equal("hsla(170,100%,27%,0.7529)", colorcolor("#3fa796", "hsla", true));
+		it("hsl(150,100%,93%) should return #dbffed", function() {
+			assert.equal("#dbffed", colorcolor("hsl(150,100%,93%)", "hex"));
 		});
-		it("should return hsl(210,100%,20%)", function() {
-			assert.equal("hsl(210,100%,20%)", colorcolor("#036", "hsl"));
+		it("hsla(150,100%,93%,0.6667) should return #dbffed", function() {
+			assert.equal("#dbffed", colorcolor("hsla(150,100%,93%,0.6667)", "hex"));
 		});
-		it("should return hsl(210,100%,20%)", function() {
-			assert.equal("hsl(210,100%,20%)", colorcolor("#003366a1", "hsl"));
+		it("hsv(150,13%,100%) should return #deffee", function() {
+			assert.equal("#deffee", colorcolor("hsv(150,13%,100%)", "hex"));
 		});
-	});
-	describe("RGB[A] to HSL[A] conversion", function() {
-		it("should return hsl(109,100%,37%)", function() {
-			assert.equal("hsl(109,100%,37%)", colorcolor("rgba(35,189,0,0.75)", "hsl"));
-		});
-		it("should return hsla(109,100%,37%,0.75)", function() {
-			assert.equal("hsla(109,100%,37%,0.75)", colorcolor("rgba(35,189,0,0.75)", "hsla"));
-		});
-		it("should return hsla(109,100%,37%,1)", function() {
-			assert.equal("hsla(109,100%,37%,1)", colorcolor("rgba(35,189,0,0.75)", "hsla", true));
+		it("hsb(150,13%,100%) should return #deffee", function() {
+			assert.equal("#deffee", colorcolor("hsb(150,13%,100%)", "hex"));
 		});
 	});
-	describe("RGB[A] to HSV conversion", function() {
-		it("should return hsv(109,100%,74%)", function() {
-			assert.equal("hsv(109,100%,74%)", colorcolor("rgba(35,189,0,0.75)", "hsv"));
+	describe("convert back to hexa (HS[l|v|b] lacks precision)", function() {
+		it("#ddffee should return #ddffeeff", function() {
+			assert.equal("#ddffeeff", colorcolor("#ddffee", "hexa"));
 		});
-		it("should return hsv(109,100%,74%)", function() {
-			assert.equal("hsv(109,100%,74%)", colorcolor("rgb(35,189,0)", "hsv"));
+		it("#ddffeeaa should return #ddffeeaa", function() {
+			assert.equal("#ddffeeaa", colorcolor("#ddffeeaa", "hexa"));
+		});
+		it("rgb(221,255,238) should return #ddffeeff", function() {
+			assert.equal("#ddffeeff", colorcolor("rgb(221,255,238)", "hexa"));
+		});
+		it("rgba(221,255,2380.6667) should return #ddffeeaa", function() {
+			assert.equal("#ddffeeaa", colorcolor("rgba(221,255,238,0.6667)", "hexa"));
+		});
+		it("hsl(150,100%,93%) should return #dbffedff", function() {
+			assert.equal("#dbffedff", colorcolor("hsl(150,100%,93%)", "hexa"));
+		});
+		it("hsla(150,100%,93%,0.6667) should return #dbffedaa", function() {
+			assert.equal("#dbffedaa", colorcolor("hsla(150,100%,93%,0.6667)", "hexa"));
+		});
+		it("hsv(150,13%,100%) should return #deffeeff", function() {
+			assert.equal("#deffeeff", colorcolor("hsv(150,13%,100%)", "hexa"));
+		});
+		it("hsb(150,13%,100%) should return #deffeeff", function() {
+			assert.equal("#deffeeff", colorcolor("hsb(150,13%,100%)", "hexa"));
 		});
 	});
-	describe("word to RGBA conversion", function() {
-		it("should return rgba(255,0,0,1)", function() {
-			assert.equal("rgba(255,0,0,1)", colorcolor("red"));
-		});
-		it("should return rgba(0,0,255,1)", function() {
-			assert.equal("rgba(0,0,255,1)", colorcolor("blue"));
-		});
-	})
 });
