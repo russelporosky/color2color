@@ -1,5 +1,7 @@
 # colorcolor - Javascript Function
 
+[![Build Status](https://travis-ci.org/metaloha/color2color.svg?branch=master)](https://travis-ci.org/metaloha/color2color)
+
 The colorcolor function converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings.
 
 ## Demo
