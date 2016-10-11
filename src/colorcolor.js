@@ -1,8 +1,9 @@
 /*jshint esversion: 6 */
 
-function colorcolor(color, newColor = "rgba", calculateOpacity = false) {
+function colorcolor(color, newColor, calculateOpacity) {
 	color = color.toLowerCase();
-	newColor = newColor.toLowerCase();
+	var newColor = newColor ? newColor.toLowerCase() : "rgba";
+	var calculateOpacity = calculateOpacity || false;
 	var returnedColor = color;
 	var namedColor = require('color-name');
 	var r,g,b,a;
@@ -116,12 +117,13 @@ function colorcolor(color, newColor = "rgba", calculateOpacity = false) {
 	}
 
 	// Search the color definitions for a match
-	for (let colorDefinition in colorDefinitions) {
-		let re = colorDefinitions[colorDefinition].re;
-		let processor = colorDefinitions[colorDefinition].toRGBA;
-		let bits = re.exec(color);
+	var colorDefinition;
+	for (colorDefinition in colorDefinitions) {
+		var re = colorDefinitions[colorDefinition].re;
+		var processor = colorDefinitions[colorDefinition].toRGBA;
+		var bits = re.exec(color);
 		if (bits) {
-			let channels = processor(bits);
+			var channels = processor(bits);
 			r = channels[0];
 			g = channels[1];
 			b = channels[2];
@@ -144,23 +146,23 @@ function colorcolor(color, newColor = "rgba", calculateOpacity = false) {
 			returnedColor = "#" + ("0" + r.toString(16)).slice(-2) + ("0" + g.toString(16)).slice(-2) + ("0" + b.toString(16)).slice(-2) + ("0" + (Math.round(255 * a)).toString(16)).slice(-2);
 			break;
 		case "hsl":
-			let hsl = rgbToHsl({ "r": r, "g": g, "b": b });
+			var hsl = rgbToHsl({ "r": r, "g": g, "b": b });
 			returnedColor = `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
 			break;
 		case "hsla":
 			if (calculateOpacity) {
 				[r, g, b, a] = calculateOpacityFromWhite(r, g, b, a);
 			}
-			let hsla = rgbToHsl({ "r": r, "g": g, "b": b, "a": a });
+			var hsla = rgbToHsl({ "r": r, "g": g, "b": b, "a": a });
 			returnedColor = `hsla(${hsla.h},${hsla.s}%,${hsla.l}%,${hsla.a})`;
 			break;
 		case "hsb":
 			/* Same as `hsv` */
-			let hsb = rgbToHsv({ "r": r, "g": g, "b": b });
+			var hsb = rgbToHsv({ "r": r, "g": g, "b": b });
 			returnedColor = `hsb(${hsb.h},${hsb.s}%,${hsb.v}%)`;
 			break;
 		case "hsv":
-			let hsv = rgbToHsv({ "r": r, "g": g, "b": b });
+			var hsv = rgbToHsv({ "r": r, "g": g, "b": b });
 			returnedColor = `hsv(${hsv.h},${hsv.s}%,${hsv.v}%)`;
 			break;
 		case "rgb":
@@ -199,7 +201,7 @@ function hslToRgb(bits) {
 		a: parseFloat(bits[ 4 ])
 	};
 	if (hsl.s === 0) {
-		let v = 255 * hsl.l;
+		var v = 255 * hsl.l;
 		rgba = {
 			r: v,
 			g: v,
@@ -207,8 +209,8 @@ function hslToRgb(bits) {
 			a: hsl.a
 		};
 	} else {
-		let q = hsl.l < 0.5 ? hsl.l * ( 1 + hsl.s ) : ( hsl.l + hsl.s ) - ( hsl.l * hsl.s );
-		let p = 2 * hsl.l - q;
+		var q = hsl.l < 0.5 ? hsl.l * ( 1 + hsl.s ) : ( hsl.l + hsl.s ) - ( hsl.l * hsl.s );
+		var p = 2 * hsl.l - q;
 		rgba.r = hueToRgb(p, q, hsl.h + ( 1 / 3 ) ) * 255;
 		rgba.g = hueToRgb(p, q, hsl.h) * 255;
 		rgba.b = hueToRgb(p, q, hsl.h - ( 1 / 3 ) ) * 255;
