@@ -1,4 +1,3 @@
-import * as namedColors from 'css-color-names';
 import {
 	ColorDefinitions,
 	ColorName,
@@ -6,6 +5,7 @@ import {
 	Hsl,
 	Hsv,
 } from './color-definitions';
+import * as namedColors from './css-color-names.json';
 import {
 	AlphaPrecision,
 	calculateOpacityFromWhite,
@@ -67,10 +67,18 @@ export const colorcolor = (
 		}
 	}
 
-	r = Math.round((r < LowerDecimalLimit || isNaN(r)) ? LowerDecimalLimit : ((r > UpperDecimalLimit) ? UpperDecimalLimit : r));
-	g = Math.round((g < LowerDecimalLimit || isNaN(g)) ? LowerDecimalLimit : ((g > UpperDecimalLimit) ? UpperDecimalLimit : g));
-	b = Math.round((b < LowerDecimalLimit || isNaN(b)) ? LowerDecimalLimit : ((b > UpperDecimalLimit) ? UpperDecimalLimit : b));
-	a = (a < LowerDecimalLimit || isNaN(a)) ? LowerDecimalLimit : ((a > UpperOpacityLimit) ? UpperOpacityLimit : a);
+	r = Math.round((r < LowerDecimalLimit || isNaN(r)) ?
+		LowerDecimalLimit :
+		((r > UpperDecimalLimit) ? UpperDecimalLimit : r));
+	g = Math.round((g < LowerDecimalLimit || isNaN(g)) ?
+		LowerDecimalLimit :
+		((g > UpperDecimalLimit) ? UpperDecimalLimit : g));
+	b = Math.round((b < LowerDecimalLimit || isNaN(b)) ?
+		LowerDecimalLimit :
+		((b > UpperDecimalLimit) ? UpperDecimalLimit : b));
+	a = (a < LowerDecimalLimit || isNaN(a)) ?
+		LowerDecimalLimit :
+		((a > UpperOpacityLimit) ? UpperOpacityLimit : a);
 
 	switch (targetColor) {
 		case ColorName.HEX:

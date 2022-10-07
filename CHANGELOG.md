@@ -1,3 +1,8 @@
+## v2.0.3
+* rebuilt with TypeScript
+* fixed HSB/HSL/HSLA/HSV to allow whitespace
+* minimized and unminimized versions available in the `dist` folder
+
 ## v1.1.1
 * fixed some rounding issues with the HSL/HSV conversions
 * added HSB (identical to HSB)

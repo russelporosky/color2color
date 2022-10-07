@@ -1,6 +1,15 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { Hsl, Hsv, Rgb, Rgba } from './color-definitions';
 
 export const AlphaPrecision = 4;
+const HexRadix = 16;
+const MaxDegrees = 360;
+const MaxFixed = 0;
+const MaxPercent = 100;
+const MaxRgb = 255;
+const MaxRgbRange = 256;
+const MinOpacity = 0;
+const MinPercent = 0;
 const Precision = 1;
 
 /**
@@ -12,12 +21,12 @@ const Precision = 1;
  */
 export const calculateOpacityFromWhite = (r: number, g: number, b: number): number[] => {
 	const min = Math.min(r, g, b);
-	const calculatedAlpha = (255 - min) / 255;
+	const calculatedAlpha = (MaxRgb - min) / MaxRgb;
 
 	return [
-		+( 0 || ( r - min ) / calculatedAlpha ).toFixed(0),
-		+( 0 || ( g - min ) / calculatedAlpha ).toFixed(0),
-		+( 0 || ( b - min ) / calculatedAlpha ).toFixed(0),
+		+( MinOpacity || ( r - min ) / calculatedAlpha ).toFixed(MaxFixed),
+		+( MinOpacity || ( g - min ) / calculatedAlpha ).toFixed(MaxFixed),
+		+( MinOpacity || ( b - min ) / calculatedAlpha ).toFixed(MaxFixed),
 		parseFloat(calculatedAlpha.toFixed(AlphaPrecision)),
 	];
 }
@@ -29,9 +38,9 @@ export const calculateOpacityFromWhite = (r: number, g: number, b: number): numb
  */
 export const hslToRgb = (bits: string[]): Rgba => {
 	const hsl: Hsl = {
-		h: +bits[1] / 360,
-		s: +bits[2] / 100,
-		l: +bits[3] / 100,
+		h: +bits[1] / MaxDegrees,
+		s: +bits[2] / MaxPercent,
+		l: +bits[3] / MaxPercent,
 		a: parseFloat(bits[ 4 ]),
 	};
 	const rgba: Rgba = {
@@ -41,8 +50,8 @@ export const hslToRgb = (bits: string[]): Rgba => {
 		a: 0,
 	};
 
-	if (hsl.s === 0) {
-		const v = 255 * hsl.l;
+	if (hsl.s === MinPercent) {
+		const v = MaxRgb * hsl.l;
 		rgba.r = v;
 		rgba.g = v;
 		rgba.b = v;
@@ -50,9 +59,9 @@ export const hslToRgb = (bits: string[]): Rgba => {
 	} else {
 		const q = hsl.l < 0.5 ? hsl.l * ( 1 + hsl.s ) : ( hsl.l + hsl.s ) - ( hsl.l * hsl.s );
 		const p = 2 * hsl.l - q;
-		rgba.r = +(hueToRgb(p, q, hsl.h + ( 1 / 3 ) ) * 255).toFixed(0);
-		rgba.g = +(hueToRgb(p, q, hsl.h) * 255).toFixed(0);
-		rgba.b = +(hueToRgb(p, q, hsl.h - ( 1 / 3 ) ) * 255).toFixed(0);
+		rgba.r = +(hueToRgb(p, q, hsl.h + ( 1 / 3 ) ) * MaxRgb).toFixed(MaxFixed);
+		rgba.g = +(hueToRgb(p, q, hsl.h) * MaxRgb).toFixed(MaxFixed);
+		rgba.b = +(hueToRgb(p, q, hsl.h - ( 1 / 3 ) ) * MaxRgb).toFixed(MaxFixed);
 		rgba.a = hsl.a;
 	}
 
@@ -71,9 +80,9 @@ export const hsvToRgb = (bits: string[]): Rgb => {
 		b: 0,
 	};
 	const hsv: Hsv = {
-		h: +bits[1] / 360,
-		s: +bits[2] / 100,
-		v: +bits[3] / 100,
+		h: +bits[1] / MaxDegrees,
+		s: +bits[2] / MaxPercent,
+		v: +bits[3] / MaxPercent,
 	};
 	const i = Math.floor(hsv.h * 6);
 	const f = hsv.h * 6 - i;
@@ -113,9 +122,9 @@ export const hsvToRgb = (bits: string[]): Rgb => {
 			rgb.b = q;
 			break;
 	}
-	rgb.r = +(rgb.r * 255).toFixed(0);
-	rgb.g = +(rgb.g * 255).toFixed(0);
-	rgb.b = +(rgb.b * 255).toFixed(0);
+	rgb.r = +(rgb.r * MaxRgb).toFixed(MaxFixed);
+	rgb.g = +(rgb.g * MaxRgb).toFixed(MaxFixed);
+	rgb.b = +(rgb.b * MaxRgb).toFixed(MaxFixed);
 
 	return rgb;
 }
@@ -125,13 +134,15 @@ export const hsvToRgb = (bits: string[]): Rgb => {
  *
  * @param p
  * @param q
- * @param t
+ * @param originalT
  */
-const hueToRgb = (p: number, q: number, t: number): number => {
-	if (t < 0) {
+const hueToRgb = (p: number, q: number, originalT: number): number => {
+	let t = originalT;
+
+	if (originalT < 0) {
 		t += 1;
 	}
-	if (t > 1) {
+	if (originalT > 1) {
 		t -= 1;
 	}
 	if (t < 1 / 6) {
@@ -152,7 +163,7 @@ const hueToRgb = (p: number, q: number, t: number): number => {
  *
  * @param n
  */
-export const numberToHex = (n: number): string => `0${n.toString(16)}`.slice(-2);
+export const numberToHex = (n: number): string => `0${n.toString(HexRadix)}`.slice(-2);
 
 /**
  * Convert an RGB color to an HSL color.
@@ -164,9 +175,9 @@ export const numberToHex = (n: number): string => `0${n.toString(16)}`.slice(-2)
  */
 export const rgbToHsl = (r: number, g: number, b: number, a: number): Hsl => {
 	const rgba: Rgba = {
-		r: r / 255,
-		g: g / 255,
-		b: b / 255,
+		r: r / MaxRgb,
+		g: g / MaxRgb,
+		b: b / MaxRgb,
 		a,
 	};
 	const max = Math.max(rgba.r, rgba.g, rgba.b);
@@ -194,9 +205,9 @@ export const rgbToHsl = (r: number, g: number, b: number, a: number): Hsl => {
 		}
 		hsl.h /= 6;
 	}
-	hsl.h = parseFloat(( hsl.h * 360 ).toFixed(Precision));
-	hsl.s = parseFloat(( hsl.s * 100 ).toFixed(Precision));
-	hsl.l = parseFloat(( hsl.l * 100 ).toFixed(Precision));
+	hsl.h = parseFloat(( hsl.h * MaxDegrees ).toFixed(Precision));
+	hsl.s = parseFloat(( hsl.s * MaxPercent ).toFixed(Precision));
+	hsl.l = parseFloat(( hsl.l * MaxPercent ).toFixed(Precision));
 
 	return hsl;
 }
@@ -211,9 +222,9 @@ export const rgbToHsl = (r: number, g: number, b: number, a: number): Hsl => {
  */
 export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
 	const rgba: Rgba = {
-		r: toPercent(r % 256, 256),
-		g: toPercent(g % 256, 256),
-		b: toPercent(b % 256, 256),
+		r: toPercent(r % MaxRgbRange, MaxRgbRange),
+		g: toPercent(g % MaxRgbRange, MaxRgbRange),
+		b: toPercent(b % MaxRgbRange, MaxRgbRange),
 		a,
 	};
 	const max = Math.max(rgba.r, rgba.g, rgba.b);
@@ -221,14 +232,14 @@ export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
 	const diff = max - min;
 	const hsv: Hsv = {
 		h: 0,
-		s: max === 0 ? 0 : diff / max,
+		s: max === MinPercent ? MinPercent : diff / max,
 		v: max,
 	};
 
 	if (max !== min) {
 		switch (max) {
 			case rgba.r:
-				hsv.h = ( rgba.g - rgba.b ) / diff + ( rgba.g < rgba.b ? 6 : 0 );
+				hsv.h = ( rgba.g - rgba.b ) / diff + ( rgba.g < rgba.b ? 6 : MinPercent );
 				break;
 			case rgba.g:
 				hsv.h = ( rgba.b - rgba.r ) / diff + 2;
@@ -239,9 +250,9 @@ export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
 		}
 		hsv.h /= 6;
 	}
-	hsv.h = parseFloat(( hsv.h * 360 ).toFixed(Precision));
-	hsv.s = parseFloat(( hsv.s * 100 ).toFixed(Precision));
-	hsv.v = parseFloat(( hsv.v * 100 ).toFixed(Precision));
+	hsv.h = parseFloat(( hsv.h * MaxDegrees ).toFixed(Precision));
+	hsv.s = parseFloat(( hsv.s * MaxPercent ).toFixed(Precision));
+	hsv.v = parseFloat(( hsv.v * MaxPercent ).toFixed(Precision));
 
 	return hsv;
 };
