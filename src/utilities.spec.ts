@@ -1,4 +1,12 @@
-import {calculateOpacityFromWhite, hslToRgb, hsvToRgb, numberToHex, rgbToHsl, rgbToHsv} from './utilities';
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import {
+	calculateOpacityFromWhite,
+	hslToRgb,
+	hsvToRgb,
+	numberToHex,
+	rgbToHsl,
+	rgbToHsv,
+} from './utilities';
 
 describe('utilities', () => {
 	describe('calculateOpacityFromWhite', () => {

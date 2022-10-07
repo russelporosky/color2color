@@ -47,7 +47,7 @@ describe('colorcolor', () => {
 		});
 	});
 
-	describe(`with ${'#dfea'}`, () => {
+	describe('with #dfea', () => {
 		it('hex should return #ddffee', () => {
 			expect(colorcolor('#dfea', 'hex')).toEqual('#ddffee');
 		});

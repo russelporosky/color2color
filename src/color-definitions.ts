@@ -49,17 +49,24 @@ export type Rgba = {
 	a: number;
 };
 
+const DecimalRadix = 10;
+const HexRadix = 16;
 const MaxOpacity = 1;
 const MaxOpacitySteps = 255;
+
+const RedIndex = 1;
+const GreenIndex = 2;
+const BlueIndex = 3;
+const AlphaIndex = 4;
 
 export const ColorDefinitions: ColorDefinitions = {
 	'hex': {
 		example: ['#00ff00', '#336699'],
 		re: /^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
 		toRGBA: bits => [
-			parseInt(bits[ 1 ], 16),
-			parseInt(bits[ 2 ], 16),
-			parseInt(bits[ 3 ], 16),
+			parseInt(bits[RedIndex], HexRadix),
+			parseInt(bits[GreenIndex], HexRadix),
+			parseInt(bits[BlueIndex], HexRadix),
 			MaxOpacity,
 		],
 	},
@@ -67,9 +74,9 @@ export const ColorDefinitions: ColorDefinitions = {
 		example: ['#0f0', '#369'],
 		re: /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
 		toRGBA: bits => [
-			parseInt(bits[ 1 ] + bits[ 1 ], 16),
-			parseInt(bits[ 2 ] + bits[ 2 ], 16),
-			parseInt(bits[ 3 ] + bits[ 3 ], 16),
+			parseInt(bits[RedIndex] + bits[RedIndex], HexRadix),
+			parseInt(bits[GreenIndex] + bits[GreenIndex], HexRadix),
+			parseInt(bits[BlueIndex] + bits[BlueIndex], HexRadix),
 			MaxOpacity,
 		],
 	},
@@ -77,20 +84,20 @@ export const ColorDefinitions: ColorDefinitions = {
 		example: ['#00ff00ff', '#336699a0'],
 		re: /^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
 		toRGBA: bits => [
-			parseInt(bits[ 1 ], 16),
-			parseInt(bits[ 2 ], 16),
-			parseInt(bits[ 3 ], 16),
-			parseInt(bits[ 4 ], 16) / MaxOpacitySteps,
+			parseInt(bits[RedIndex], HexRadix),
+			parseInt(bits[GreenIndex], HexRadix),
+			parseInt(bits[BlueIndex], HexRadix),
+			parseInt(bits[AlphaIndex], HexRadix) / MaxOpacitySteps,
 		],
 	},
 	'hex4a': {
 		example: ['#fb0f', '#f0f8'],
 		re: /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
 		toRGBA: bits => [
-			parseInt(bits[ 1 ] + bits[ 1 ], 16),
-			parseInt(bits[ 2 ] + bits[ 2 ], 16),
-			parseInt(bits[ 3 ] + bits[ 3 ], 16),
-			parseInt(bits[ 4 ] + bits[ 4 ], 16) / MaxOpacitySteps,
+			parseInt(bits[RedIndex] + bits[RedIndex], HexRadix),
+			parseInt(bits[GreenIndex] + bits[GreenIndex], HexRadix),
+			parseInt(bits[BlueIndex] + bits[BlueIndex], HexRadix),
+			parseInt(bits[AlphaIndex] + bits[AlphaIndex], HexRadix) / MaxOpacitySteps,
 		],
 	},
 	'hsb': {
@@ -111,7 +118,7 @@ export const ColorDefinitions: ColorDefinitions = {
 		example: ['hsl(120, 100%, 25%)', 'hsl(0, 100%, 50%)'],
 		re: /^hsl\(\s*(\d*\.?\d+),\s*(\d*\.?\d+)%,\s*(\d*\.?\d+)%\s*\)$/,
 		toRGBA: bits => {
-			bits[ 4 ] = `${MaxOpacity}`;
+			bits[AlphaIndex] = `${MaxOpacity}`;
 			const rgba = hslToRgb(bits);
 
 			return [
@@ -154,9 +161,9 @@ export const ColorDefinitions: ColorDefinitions = {
 		example: ['rgb(123, 234, 45)', 'rgb(255,234,245)'],
 		re: /^rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\s*\)$/,
 		toRGBA: bits => [
-			parseInt(bits[ 1 ], 10),
-			parseInt(bits[ 2 ], 10),
-			parseInt(bits[ 3 ], 10),
+			parseInt(bits[RedIndex], DecimalRadix),
+			parseInt(bits[GreenIndex], DecimalRadix),
+			parseInt(bits[BlueIndex], DecimalRadix),
 			MaxOpacity,
 		],
 	},
@@ -164,10 +171,10 @@ export const ColorDefinitions: ColorDefinitions = {
 		example: ['rgba(123, 234, 45, 1)', 'rgba(255,234,245, 0.5)'],
 		re: /^rgba\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d+(?:\.\d+)?|\.\d+)\s*\)/,
 		toRGBA: bits => [
-			parseInt(bits[ 1 ], 10),
-			parseInt(bits[ 2 ], 10),
-			parseInt(bits[ 3 ], 10),
-			parseFloat(bits[ 4 ]),
+			parseInt(bits[RedIndex], DecimalRadix),
+			parseInt(bits[GreenIndex], DecimalRadix),
+			parseInt(bits[BlueIndex], DecimalRadix),
+			parseFloat(bits[AlphaIndex]),
 		],
 	},
 };
