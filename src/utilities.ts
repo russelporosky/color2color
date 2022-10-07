@@ -137,7 +137,7 @@ export const hsvToRgb = (bits: string[]): Rgb => {
  * @param originalT
  */
 const hueToRgb = (p: number, q: number, originalT: number): number => {
-	let t = 0;
+	let t = originalT;
 
 	if (originalT < 0) {
 		t += 1;
