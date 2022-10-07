@@ -10,6 +10,45 @@ interface ColorDefinitions {
 	[key: string]: ColorDefinition;
 }
 
+export enum ColorName {
+	HEX = 'hex',
+	HEXA = 'hexa',
+	HSL = 'hsl',
+	HSLA = 'hsla',
+	HSB = 'hsb',
+	HSV = 'hsv',
+	RGB = 'rgb',
+	RGBA = 'rgba',
+}
+
+export type ColorType = `${ColorName}`;
+
+export type Hsl = {
+	h: number;
+	s: number;
+	l: number;
+	a: number;
+}
+
+export type Hsv = {
+	h: number;
+	s: number;
+	v: number;
+}
+
+export type Rgb = {
+	r: number;
+	g: number;
+	b: number;
+};
+
+export type Rgba = {
+	r: number;
+	g: number;
+	b: number;
+	a: number;
+};
+
 const MaxOpacity = 1;
 const MaxOpacitySteps = 255;
 

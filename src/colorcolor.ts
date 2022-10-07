@@ -1,17 +1,37 @@
 import * as namedColors from 'css-color-names';
-import { ColorDefinitions } from './color-definitions';
 import {
-	AlphaPrecision,
-	calculateOpacityFromWhite,
+	ColorDefinitions,
 	ColorName,
 	ColorType,
 	Hsl,
 	Hsv,
+} from './color-definitions';
+import {
+	AlphaPrecision,
+	calculateOpacityFromWhite,
 	numberToHex,
 	rgbToHsl,
 	rgbToHsv,
 } from './utilities';
 
+const LowerDecimalLimit = 0;
+const UpperDecimalLimit = 255;
+const UpperOpacityLimit = 1;
+
+/**
+ * Convert a color string in any valid CSS format (RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, or HSB) into another format.
+ *
+ * @example
+ * // returns 'rgba(35,189,0,1)'
+ * colorcolor('hsla(109,100%,37%,1)');
+ * @example
+ * // returns 'rgba(0,255,128,0.1333)'
+ * colorcolor('#dfe', 'rgba', true);
+ *
+ * @param originalColor The CSS color value that needs to be converted
+ * @param targetColor The CSS color type to convert to
+ * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
+ */
 export const colorcolor = (
 	originalColor: string,
 	targetColor: ColorType = ColorName.RGBA,
@@ -25,7 +45,7 @@ export const colorcolor = (
 	let hsl: Hsl;
 	let hsv: Hsv;
 	let r = 0;
-	let returnedColor = '';
+	let returnedColor: string;
 
 	// convert named color to hex
 	if (Object.prototype.hasOwnProperty.call(namedColors, convertedColor)) {
@@ -47,10 +67,10 @@ export const colorcolor = (
 		}
 	}
 
-	r = Math.round( ( r < 0 || isNaN(r) ) ? 0 : ( ( r > 255 ) ? 255 : r ) );
-	g = Math.round( ( g < 0 || isNaN(g) ) ? 0 : ( ( g > 255 ) ? 255 : g ) );
-	b = Math.round( ( b < 0 || isNaN(b) ) ? 0 : ( ( b > 255 ) ? 255 : b ) );
-	a = ( a < 0 || isNaN(a) ) ? 0 : ( ( a > 1 ) ? 1 : a );
+	r = Math.round((r < LowerDecimalLimit || isNaN(r)) ? LowerDecimalLimit : ((r > UpperDecimalLimit) ? UpperDecimalLimit : r));
+	g = Math.round((g < LowerDecimalLimit || isNaN(g)) ? LowerDecimalLimit : ((g > UpperDecimalLimit) ? UpperDecimalLimit : g));
+	b = Math.round((b < LowerDecimalLimit || isNaN(b)) ? LowerDecimalLimit : ((b > UpperDecimalLimit) ? UpperDecimalLimit : b));
+	a = (a < LowerDecimalLimit || isNaN(a)) ? LowerDecimalLimit : ((a > UpperOpacityLimit) ? UpperOpacityLimit : a);
 
 	switch (targetColor) {
 		case ColorName.HEX:
@@ -58,10 +78,10 @@ export const colorcolor = (
 			break;
 		case ColorName.HEXA:
 			if (calculateOpacity) {
-				[r, g, b, a] = calculateOpacityFromWhite(r, g, b, a);
+				[r, g, b, a] = calculateOpacityFromWhite(r, g, b);
 			}
 
-			returnedColor = `#${numberToHex(r)}${numberToHex(g)}${numberToHex(b)}${numberToHex(Math.round(255 * a))}`;
+			returnedColor = `#${numberToHex(r)}${numberToHex(g)}${numberToHex(b)}${numberToHex(Math.round(UpperDecimalLimit * a))}`;
 			break;
 		case ColorName.HSB:
 			hsb = rgbToHsv(r, g, b, a);
@@ -75,7 +95,7 @@ export const colorcolor = (
 			break;
 		case ColorName.HSLA:
 			if (calculateOpacity) {
-				[r, g, b, a] = calculateOpacityFromWhite(r, g, b, a);
+				[r, g, b, a] = calculateOpacityFromWhite(r, g, b);
 			}
 
 			hsl = rgbToHsl(r, g, b, a);
@@ -91,10 +111,10 @@ export const colorcolor = (
 			returnedColor = `rgb(${r},${g},${b})`;
 			break;
 		case ColorName.RGBA:
-			// falls through as default
+		// falls through as default
 		default:
 			if (calculateOpacity) {
-				[r, g, b, a] = calculateOpacityFromWhite(r, g, b, a);
+				[r, g, b, a] = calculateOpacityFromWhite(r, g, b);
 			}
 
 			returnedColor = `rgba(${r},${g},${b},${a})`;

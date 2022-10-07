@@ -1,47 +1,16 @@
+import { Hsl, Hsv, Rgb, Rgba } from './color-definitions';
+
 export const AlphaPrecision = 4;
-
-export enum ColorName {
-	HEX = 'hex',
-	HEXA = 'hexa',
-	HSL = 'hsl',
-	HSLA = 'hsla',
-	HSB = 'hsb',
-	HSV = 'hsv',
-	RGB = 'rgb',
-	RGBA = 'rgba',
-}
-
-export type ColorType = `${ColorName}`;
-
-export type Hsl = {
-	h: number;
-	s: number;
-	l: number;
-	a: number;
-}
-
-export type Hsv = {
-	h: number;
-	s: number;
-	v: number;
-}
-
 const Precision = 1;
 
-export type Rgb = {
-	r: number;
-	g: number;
-	b: number;
-};
-
-export type Rgba = {
-	r: number;
-	g: number;
-	b: number;
-	a: number;
-};
-
-export const calculateOpacityFromWhite = (r: number, g: number, b: number, a: number): number[] => {
+/**
+ * Modifies the RGB values to be accurate when displayed on a white background.
+ *
+ * @param r Red decimal value
+ * @param g Green decimal value
+ * @param b Blue decimal value
+ */
+export const calculateOpacityFromWhite = (r: number, g: number, b: number): number[] => {
 	const min = Math.min(r, g, b);
 	const calculatedAlpha = (255 - min) / 255;
 
@@ -49,10 +18,15 @@ export const calculateOpacityFromWhite = (r: number, g: number, b: number, a: nu
 		+( 0 || ( r - min ) / calculatedAlpha ).toFixed(0),
 		+( 0 || ( g - min ) / calculatedAlpha ).toFixed(0),
 		+( 0 || ( b - min ) / calculatedAlpha ).toFixed(0),
-		parseFloat(a.toFixed(AlphaPrecision)),
+		parseFloat(calculatedAlpha.toFixed(AlphaPrecision)),
 	];
 }
 
+/**
+ * Convert an HSL color value to the RGB equivalent.
+ *
+ * @param bits The result of a regular expression that captures the four components of an HSL color value
+ */
 export const hslToRgb = (bits: string[]): Rgba => {
 	const hsl: Hsl = {
 		h: +bits[1] / 360,
@@ -76,15 +50,20 @@ export const hslToRgb = (bits: string[]): Rgba => {
 	} else {
 		const q = hsl.l < 0.5 ? hsl.l * ( 1 + hsl.s ) : ( hsl.l + hsl.s ) - ( hsl.l * hsl.s );
 		const p = 2 * hsl.l - q;
-		rgba.r = hueToRgb(p, q, hsl.h + ( 1 / 3 ) ) * 255;
-		rgba.g = hueToRgb(p, q, hsl.h) * 255;
-		rgba.b = hueToRgb(p, q, hsl.h - ( 1 / 3 ) ) * 255;
+		rgba.r = +(hueToRgb(p, q, hsl.h + ( 1 / 3 ) ) * 255).toFixed(0);
+		rgba.g = +(hueToRgb(p, q, hsl.h) * 255).toFixed(0);
+		rgba.b = +(hueToRgb(p, q, hsl.h - ( 1 / 3 ) ) * 255).toFixed(0);
 		rgba.a = hsl.a;
 	}
 
 	return rgba;
 };
 
+/**
+ * Convert an HSV color value to the RGB equivalent.
+ *
+ * @param bits The result of a regular expression that captures the three components of an HSV color value
+ */
 export const hsvToRgb = (bits: string[]): Rgb => {
 	const rgb: Rgb = {
 		r: 0,
@@ -134,14 +113,21 @@ export const hsvToRgb = (bits: string[]): Rgb => {
 			rgb.b = q;
 			break;
 	}
-	rgb.r = rgb.r * 255;
-	rgb.g = rgb.g * 255;
-	rgb.b = rgb.b * 255;
+	rgb.r = +(rgb.r * 255).toFixed(0);
+	rgb.g = +(rgb.g * 255).toFixed(0);
+	rgb.b = +(rgb.b * 255).toFixed(0);
 
 	return rgb;
 }
 
-export const hueToRgb = (p: number, q: number, t: number): number => {
+/**
+ * Converts a given hue (from an HSL color) to the RGB decimal value.
+ *
+ * @param p
+ * @param q
+ * @param t
+ */
+const hueToRgb = (p: number, q: number, t: number): number => {
 	if (t < 0) {
 		t += 1;
 	}
@@ -161,9 +147,22 @@ export const hueToRgb = (p: number, q: number, t: number): number => {
 	return p;
 };
 
+/**
+ * Converts decimal to hexadecimal, ensuring a leading 0 if the result is a single digit.
+ *
+ * @param n
+ */
 export const numberToHex = (n: number): string => `0${n.toString(16)}`.slice(-2);
 
-export const rgbToHsl = (r: number, g: number, b: number, a: number) => {
+/**
+ * Convert an RGB color to an HSL color.
+ *
+ * @param r Red decimal value
+ * @param g Green decimal value
+ * @param b Blue decimal value
+ * @param a Opacity float value
+ */
+export const rgbToHsl = (r: number, g: number, b: number, a: number): Hsl => {
 	const rgba: Rgba = {
 		r: r / 255,
 		g: g / 255,
@@ -202,6 +201,14 @@ export const rgbToHsl = (r: number, g: number, b: number, a: number) => {
 	return hsl;
 }
 
+/**
+ * Convert an RGB color to an HSV color.
+ *
+ * @param r Red decimal value
+ * @param g Green decimal value
+ * @param b Blue decimal value
+ * @param a Opacity float value
+ */
 export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
 	const rgba: Rgba = {
 		r: toPercent(r % 256, 256),
@@ -239,4 +246,10 @@ export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
 	return hsv;
 };
 
+/**
+ * Gives the percent as a value between 0 and 1.
+ *
+ * @param amount
+ * @param limit
+ */
 const toPercent = (amount: number, limit: number) => amount / limit;

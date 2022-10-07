@@ -1,6 +1,18 @@
 import { colorcolor } from './colorcolor';
 
 describe('colorcolor', () => {
+	it('reads floats in HSB/HSL/HSLA/HSV', () => {
+		expect(colorcolor('hsb(150,13.3%,99.6%)')).toEqual('rgba(220,254,237,1)');
+		expect(colorcolor('hsl(208,100%,97.9%)')).toEqual('rgba(244,250,255,1)');
+		expect(colorcolor('hsl(208,100%,97%)')).toEqual('rgba(240,248,255,1)');
+		expect(colorcolor('hsla(208,100%,97.1%, 0.6)')).toEqual('rgba(240,248,255,0.6)');
+	});
+
+	it('calculates opacity', () => {
+		expect(colorcolor('#dfe', 'rgba', true)).toEqual('rgba(0,255,128,0.1333)');
+		expect(colorcolor('#dfe', 'rgba', false)).toEqual('rgba(221,255,238,1)');
+	});
+
 	describe('with named color "AliceBlue"', () => {
 		it('hex should return #f0f8ff', () => {
 			expect(colorcolor('AliceBlue', 'hex')).toEqual('#f0f8ff');

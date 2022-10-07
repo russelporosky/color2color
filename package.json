@@ -2,7 +2,7 @@
   "name": "colorcolor",
   "version": "2.0.0",
   "description": "colorcolor converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings.",
-  "main": "./src/colorcolor.js",
+  "main": "./src/colorcolor.ts",
   "scripts": {
     "build": "tsc --project src/tsconfig.app.json",
     "build:watch": "tsc --project src/tsconfig.app.json --watch",
