@@ -7,10 +7,10 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
-      "es2017",
-      "dom"
+      "es2015",
+      "dom",
     ],
-    "module": "esnext",
+    "module": "es2015",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
@@ -21,10 +21,11 @@
     "noUnusedParameters": true,
     "outDir": "./dist",
     "paths": {},
+    "resolveJsonModule": true,
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "target": "es2015"
   },
   "exclude": [
     "node_modules"
