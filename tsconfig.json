@@ -10,7 +10,7 @@
       "es2015",
       "dom",
     ],
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
@@ -25,9 +25,10 @@
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,
-    "target": "es2015"
+    "target": "es5"
   },
   "exclude": [
+    "dist",
     "node_modules"
   ]
 }

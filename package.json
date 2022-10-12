@@ -1,14 +1,15 @@
 {
   "name": "colorcolor",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "colorcolor converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings.",
-  "main": "./src/colorcolor.ts",
+  "main": "./dist/colorcolor.js",
+  "types": "./dist/colorcolor.d.ts",
   "scripts": {
-    "build": "copyfiles node_modules/css-color-names/css-color-names.json src && tsc --project src/tsconfig.app.json",
+    "build": "copyfiles -f node_modules/css-color-names/css-color-names.json src && tsc --project src/tsconfig.app.json",
     "build:watch": "tsc --project src/tsconfig.app.json --watch",
     "lint": "eslint ./src",
     "minify": "uglifyjs dist/colorcolor.js --output dist/colorcolor.min.js",
-    "postbuild": "npm run rollup && npm run minify && rimraf dist/src",
+    "postbuild": "copyfiles -f dist/src/colorcolor.d.ts dist && npm run rollup && npm run minify && rimraf dist/src",
     "rollup": "rollup -c",
     "test": "tsc --noEmit -p . && jest --no-cache",
     "test:watch": "tsc --noEmit -p . && jest --no-cache --watch"
