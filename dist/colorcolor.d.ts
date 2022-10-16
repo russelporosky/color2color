@@ -9,7 +9,28 @@ declare enum ColorName {
     RGBA = "rgba"
 }
 declare type ColorType = `${ColorName}`;
+declare type Hex = {
+    r: string;
+    g: string;
+    b: string;
+};
+declare type Hexa = {
+    r: string;
+    g: string;
+    b: string;
+    a: string;
+};
+declare type Hsb = {
+    h: number;
+    s: number;
+    b: number;
+};
 declare type Hsl = {
+    h: number;
+    s: number;
+    l: number;
+};
+declare type Hsla = {
     h: number;
     s: number;
     l: number;
@@ -65,7 +86,7 @@ export declare const numberToHex: (n: number) => string;
  * @param b Blue decimal value
  * @param a Opacity float value
  */
-export declare const rgbToHsl: (r: number, g: number, b: number, a: number) => Hsl;
+export declare const rgbToHsl: (r: number, g: number, b: number, a: number) => Hsla;
 /**
  * Convert an RGB color to an HSV color.
  *
@@ -90,4 +111,20 @@ export declare const rgbToHsv: (r: number, g: number, b: number, a: number) => H
  * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
  */
 export declare function colorcolor(originalColor: string, targetColor?: ColorType, calculateOpacity?: boolean): string;
+/**
+ * Convert a color string in any valid CSS format (RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, or HSB) into the numeric components of another format.
+ *
+ * @example
+ * // returns '{ r: 35, g: 189, b: 0, a: 1 }'
+ * colorcolor('hsla(109,100%,37%,1)');
+ * @example
+ * // returns 'rgba(0,255,128,0.1333)'
+ * // returns '{ r: 0, g: 255, b: 128, a: 0.1333 }'
+ * colorcolor('#dfe', 'rgba', true);
+ *
+ * @param originalColor The CSS color value that needs to be converted
+ * @param targetColor The CSS color type to convert to
+ * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
+ */
+export declare function colorcolorRaw(originalColor: string, targetColor?: ColorType, calculateOpacity?: boolean): Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba;
 export {};

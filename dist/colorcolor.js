@@ -593,6 +593,71 @@ var ColorDefinitions = {
  * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
  */
 export function colorcolor(originalColor, targetColor, calculateOpacity) {
+    if (targetColor === void 0) { targetColor = ColorName.RGBA; }
+    if (calculateOpacity === void 0) { calculateOpacity = false; }
+    var returnedComponent = colorcolorRaw(originalColor, targetColor, calculateOpacity);
+    var returnedColor;
+    switch (targetColor) {
+        case ColorName.HEX: {
+            var hex = returnedComponent;
+            returnedColor = "#".concat(hex.r).concat(hex.g).concat(hex.b);
+            break;
+        }
+        case ColorName.HEXA: {
+            var hexa = returnedComponent;
+            returnedColor = "#".concat(hexa.r).concat(hexa.g).concat(hexa.b).concat(hexa.a);
+            break;
+        }
+        case ColorName.HSB: {
+            var hsb = returnedComponent;
+            returnedColor = "hsb(".concat(hsb.h, ",").concat(hsb.s, "%,").concat(hsb.b, "%)");
+            break;
+        }
+        case ColorName.HSL: {
+            var hsl = returnedComponent;
+            returnedColor = "hsl(".concat(hsl.h, ",").concat(hsl.s, "%,").concat(hsl.l, "%)");
+            break;
+        }
+        case ColorName.HSLA: {
+            var hsl = returnedComponent;
+            returnedColor = "hsla(".concat(hsl.h, ",").concat(hsl.s, "%,").concat(hsl.l, "%,").concat(hsl.a, ")");
+            break;
+        }
+        case ColorName.HSV: {
+            var hsv = returnedComponent;
+            returnedColor = "hsv(".concat(hsv.h, ",").concat(hsv.s, "%,").concat(hsv.v, "%)");
+            break;
+        }
+        case ColorName.RGB: {
+            var rgb = returnedComponent;
+            returnedColor = "rgb(".concat(rgb.r, ",").concat(rgb.g, ",").concat(rgb.b, ")");
+            break;
+        }
+        case ColorName.RGBA:
+        default: {
+            var rgba = returnedComponent;
+            returnedColor = "rgba(".concat(rgba.r, ",").concat(rgba.g, ",").concat(rgba.b, ",").concat(rgba.a, ")");
+            break;
+        }
+    }
+    return returnedColor;
+}
+/**
+ * Convert a color string in any valid CSS format (RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, or HSB) into the numeric components of another format.
+ *
+ * @example
+ * // returns '{ r: 35, g: 189, b: 0, a: 1 }'
+ * colorcolor('hsla(109,100%,37%,1)');
+ * @example
+ * // returns 'rgba(0,255,128,0.1333)'
+ * // returns '{ r: 0, g: 255, b: 128, a: 0.1333 }'
+ * colorcolor('#dfe', 'rgba', true);
+ *
+ * @param originalColor The CSS color value that needs to be converted
+ * @param targetColor The CSS color type to convert to
+ * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
+ */
+export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
     var _a, _b, _c;
     if (targetColor === void 0) { targetColor = ColorName.RGBA; }
     if (calculateOpacity === void 0) { calculateOpacity = false; }
@@ -604,7 +669,7 @@ export function colorcolor(originalColor, targetColor, calculateOpacity) {
     var hsl;
     var hsv;
     var r = 0;
-    var returnedColor;
+    var returnedComponent;
     // convert named color to hex
     if (Object.prototype.hasOwnProperty.call(namedColors, convertedColor)) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
@@ -642,35 +707,65 @@ export function colorcolor(originalColor, targetColor, calculateOpacity) {
             ((a > UpperOpacityLimit) ? UpperOpacityLimit : a);
     switch (targetColor) {
         case ColorName.HEX:
-            returnedColor = "#".concat(numberToHex(r)).concat(numberToHex(g)).concat(numberToHex(b));
+            returnedComponent = {
+                r: numberToHex(r),
+                g: numberToHex(g),
+                b: numberToHex(b),
+            };
             break;
         case ColorName.HEXA:
             if (calculateOpacity) {
                 _a = calculateOpacityFromWhite(r, g, b), r = _a[0], g = _a[1], b = _a[2], a = _a[3];
             }
-            returnedColor = "#".concat(numberToHex(r)).concat(numberToHex(g)).concat(numberToHex(b)).concat(numberToHex(Math.round(UpperDecimalLimit * a)));
+            returnedComponent = {
+                r: numberToHex(r),
+                g: numberToHex(g),
+                b: numberToHex(b),
+                a: numberToHex(Math.round(UpperDecimalLimit * a)),
+            };
             break;
         case ColorName.HSB:
             hsb = rgbToHsv(r, g, b, a);
-            returnedColor = "hsb(".concat(hsb.h, ",").concat(hsb.s, "%,").concat(hsb.v, "%)");
+            returnedComponent = {
+                h: hsb.h,
+                s: hsb.s,
+                b: hsb.v,
+            };
             break;
         case ColorName.HSL:
             hsl = rgbToHsl(r, g, b, a);
-            returnedColor = "hsl(".concat(hsl.h, ",").concat(hsl.s, "%,").concat(hsl.l, "%)");
+            returnedComponent = {
+                h: hsl.h,
+                s: hsl.s,
+                l: hsl.l,
+            };
             break;
         case ColorName.HSLA:
             if (calculateOpacity) {
                 _b = calculateOpacityFromWhite(r, g, b), r = _b[0], g = _b[1], b = _b[2], a = _b[3];
             }
             hsl = rgbToHsl(r, g, b, a);
-            returnedColor = "hsla(".concat(hsl.h, ",").concat(hsl.s, "%,").concat(hsl.l, "%,").concat(hsl.a, ")");
+            returnedComponent = {
+                h: hsl.h,
+                s: hsl.s,
+                l: hsl.l,
+                a: hsl.a,
+            };
             break;
         case ColorName.HSV:
             hsv = rgbToHsv(r, g, b, a);
-            returnedColor = "hsv(".concat(hsv.h, ",").concat(hsv.s, "%,").concat(hsv.v, "%)");
+            returnedComponent = {
+                h: hsv.h,
+                s: hsv.s,
+                v: hsv.v,
+            };
             break;
         case ColorName.RGB:
-            returnedColor = "rgb(".concat(r, ",").concat(g, ",").concat(b, ")");
+            returnedComponent = {
+                r: r,
+                g: g,
+                b: b,
+            };
             break;
         case ColorName.RGBA:
         // falls through as default
@@ -678,9 +773,14 @@ export function colorcolor(originalColor, targetColor, calculateOpacity) {
             if (calculateOpacity) {
                 _c = calculateOpacityFromWhite(r, g, b), r = _c[0], g = _c[1], b = _c[2], a = _c[3];
             }
-            returnedColor = "rgba(".concat(r, ",").concat(g, ",").concat(b, ",").concat(a, ")");
+            returnedComponent = {
+                r: r,
+                g: g,
+                b: b,
+                a: a,
+            };
             break;
     }
-    return returnedColor;
+    return returnedComponent;
 }
 //# sourceMappingURL=colorcolor.js.map
