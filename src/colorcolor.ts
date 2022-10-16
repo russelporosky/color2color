@@ -195,7 +195,32 @@ enum ColorName {
 
 type ColorType = `${ ColorName }`;
 
+type Hex = {
+	r: string;
+	g: string;
+	b: string;
+};
+
+type Hexa = {
+	r: string;
+	g: string;
+	b: string;
+	a: string;
+};
+
+type Hsb = {
+	h: number;
+	s: number;
+	b: number;
+}
+
 type Hsl = {
+	h: number;
+	s: number;
+	l: number;
+}
+
+type Hsla = {
 	h: number;
 	s: number;
 	l: number;
@@ -266,7 +291,7 @@ export const calculateOpacityFromWhite = (r: number, g: number, b: number): numb
  * @param bits The result of a regular expression that captures the four components of an HSL color value
  */
 export const hslToRgb = (bits: string[]): Rgba => {
-	const hsl: Hsl = {
+	const hsl: Hsla = {
 		h: +bits[1] / MaxDegrees,
 		s: +bits[2] / MaxPercent,
 		l: +bits[3] / MaxPercent,
@@ -470,7 +495,7 @@ export const numberToHex = (n: number): string => `0${ n.toString(HexRadix) }`.s
  * @param b Blue decimal value
  * @param a Opacity float value
  */
-export const rgbToHsl = (r: number, g: number, b: number, a: number): Hsl => {
+export const rgbToHsl = (r: number, g: number, b: number, a: number): Hsla => {
 	const rgba: Rgba = {
 		r: r / MaxRgb,
 		g: g / MaxRgb,
@@ -480,7 +505,7 @@ export const rgbToHsl = (r: number, g: number, b: number, a: number): Hsl => {
 	const max = Math.max(rgba.r, rgba.g, rgba.b);
 	const min = Math.min(rgba.r, rgba.g, rgba.b);
 	const diff = max - min;
-	const hsl: Hsl = {
+	const hsl: Hsla = {
 		h: 0,
 		s: 0,
 		l: (
@@ -751,20 +776,91 @@ const ColorDefinitions: ColorDefinitions = {
  * @param targetColor The CSS color type to convert to
  * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
  */
-export function colorcolor(
+export function colorcolor (
 	originalColor: string,
 	targetColor: ColorType = ColorName.RGBA,
 	calculateOpacity = false,
 ): string {
+	const returnedComponent: Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba = colorcolorRaw(originalColor, targetColor, calculateOpacity);
+
+	let returnedColor: string;
+
+	switch (targetColor) {
+		case ColorName.HEX: {
+			const hex = (returnedComponent as Hex);
+			returnedColor = `#${ hex.r }${ hex.g }${ hex.b }`;
+			break;
+		}
+		case ColorName.HEXA: {
+			const hexa = (returnedComponent as Hexa);
+			returnedColor = `#${ hexa.r }${ hexa.g }${ hexa.b }${ hexa.a }`;
+			break;
+		}
+		case ColorName.HSB: {
+			const hsb = (returnedComponent as Hsb);
+			returnedColor = `hsb(${ hsb.h },${ hsb.s }%,${ hsb.b }%)`;
+			break;
+		}
+		case ColorName.HSL: {
+			const hsl = (returnedComponent as Hsl);
+			returnedColor = `hsl(${ hsl.h },${ hsl.s }%,${ hsl.l }%)`;
+			break;
+		}
+		case ColorName.HSLA: {
+			const hsl = (returnedComponent as Hsla);
+			returnedColor = `hsla(${ hsl.h },${ hsl.s }%,${ hsl.l }%,${ hsl.a })`;
+			break;
+		}
+		case ColorName.HSV: {
+			const hsv = (returnedComponent as Hsv);
+			returnedColor = `hsv(${ hsv.h },${ hsv.s }%,${ hsv.v }%)`;
+			break;
+		}
+		case ColorName.RGB: {
+			const rgb = (returnedComponent as Rgb);
+			returnedColor = `rgb(${ rgb.r },${ rgb.g },${ rgb.b })`;
+			break;
+		}
+		case ColorName.RGBA:
+		default: {
+			const rgba = (returnedComponent as Rgba);
+			returnedColor = `rgba(${ rgba.r },${ rgba.g },${ rgba.b },${ rgba.a })`;
+			break;
+		}
+	}
+
+	return returnedColor;
+}
+
+/**
+ * Convert a color string in any valid CSS format (RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, or HSB) into the numeric components of another format.
+ *
+ * @example
+ * // returns '{ r: 35, g: 189, b: 0, a: 1 }'
+ * colorcolor('hsla(109,100%,37%,1)');
+ * @example
+ * // returns 'rgba(0,255,128,0.1333)'
+ * // returns '{ r: 0, g: 255, b: 128, a: 0.1333 }'
+ * colorcolor('#dfe', 'rgba', true);
+ *
+ * @param originalColor The CSS color value that needs to be converted
+ * @param targetColor The CSS color type to convert to
+ * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
+ */
+export function colorcolorRaw(
+	originalColor: string,
+	targetColor: ColorType = ColorName.RGBA,
+	calculateOpacity = false,
+): Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba {
 	let a = 0;
 	let b = 0;
 	let convertedColor = originalColor.toLowerCase();
 	let g = 0;
 	let hsb: Hsv;
-	let hsl: Hsl;
+	let hsl: Hsla;
 	let hsv: Hsv;
 	let r = 0;
-	let returnedColor: string;
+	let returnedComponent: Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba;
 
 	// convert named color to hex
 	if (Object.prototype.hasOwnProperty.call(namedColors, convertedColor)) {
@@ -835,24 +931,41 @@ export function colorcolor(
 
 	switch (targetColor) {
 		case ColorName.HEX:
-			returnedColor = `#${ numberToHex(r) }${ numberToHex(g) }${ numberToHex(b) }`;
+			returnedComponent = {
+				r: numberToHex(r),
+				g: numberToHex(g),
+				b: numberToHex(b),
+			};
 			break;
 		case ColorName.HEXA:
 			if (calculateOpacity) {
 				[r, g, b, a] = calculateOpacityFromWhite(r, g, b);
 			}
 
-			returnedColor = `#${ numberToHex(r) }${ numberToHex(g) }${ numberToHex(b) }${ numberToHex(Math.round(UpperDecimalLimit * a)) }`;
+			returnedComponent = {
+				r: numberToHex(r),
+				g: numberToHex(g),
+				b: numberToHex(b),
+				a: numberToHex(Math.round(UpperDecimalLimit * a)),
+			};
 			break;
 		case ColorName.HSB:
 			hsb = rgbToHsv(r, g, b, a);
 
-			returnedColor = `hsb(${ hsb.h },${ hsb.s }%,${ hsb.v }%)`;
+			returnedComponent = {
+				h: hsb.h,
+				s: hsb.s,
+				b: hsb.v,
+			};
 			break;
 		case ColorName.HSL:
 			hsl = rgbToHsl(r, g, b, a);
 
-			returnedColor = `hsl(${ hsl.h },${ hsl.s }%,${ hsl.l }%)`;
+			returnedComponent = {
+				h: hsl.h,
+				s: hsl.s,
+				l: hsl.l,
+			};
 			break;
 		case ColorName.HSLA:
 			if (calculateOpacity) {
@@ -861,15 +974,28 @@ export function colorcolor(
 
 			hsl = rgbToHsl(r, g, b, a);
 
-			returnedColor = `hsla(${ hsl.h },${ hsl.s }%,${ hsl.l }%,${ hsl.a })`;
+			returnedComponent = {
+				h: hsl.h,
+				s: hsl.s,
+				l: hsl.l,
+				a: hsl.a,
+			};
 			break;
 		case ColorName.HSV:
 			hsv = rgbToHsv(r, g, b, a);
 
-			returnedColor = `hsv(${ hsv.h },${ hsv.s }%,${ hsv.v }%)`;
+			returnedComponent = {
+				h: hsv.h,
+				s: hsv.s,
+				v: hsv.v,
+			};
 			break;
 		case ColorName.RGB:
-			returnedColor = `rgb(${ r },${ g },${ b })`;
+			returnedComponent = {
+				r,
+				g,
+				b,
+			};
 			break;
 		case ColorName.RGBA:
 		// falls through as default
@@ -878,9 +1004,14 @@ export function colorcolor(
 				[r, g, b, a] = calculateOpacityFromWhite(r, g, b);
 			}
 
-			returnedColor = `rgba(${ r },${ g },${ b },${ a })`;
+			returnedComponent = {
+				r,
+				g,
+				b,
+				a,
+			};
 			break;
 	}
 
-	return returnedColor;
+	return returnedComponent;
 }
