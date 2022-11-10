@@ -8,6 +8,22 @@ describe('colorcolor', () => {
 		expect(colorcolor('hsla(208,100%,97.1%, 0.6)')).toEqual('rgba(240,248,255,0.6)');
 	});
 
+	it('reads valid RGB strings', () => {
+		expect(colorcolor('rgb(220, 254, 237)')).toEqual('rgba(220,254,237,1)');
+		expect(colorcolor('rgb(220.5, 254, 237)')).toEqual('rgba(220,254,237,1)');
+		expect(colorcolor('rgb(220  254  237)')).toEqual('rgba(220,254,237,1)');
+		expect(colorcolor('rgb(220.5  254  237)')).toEqual('rgba(220,254,237,1)');
+		expect(colorcolor('rgb(85%  99%  92.5%)')).toEqual('rgba(216,252,234,1)');
+	});
+
+	it('reads valid RGBA strings', () => {
+		expect(colorcolor('rgba(220, 254, 237, 0.5)')).toEqual('rgba(220,254,237,0.5)');
+		expect(colorcolor('rgba(220.5, 254, 237, 50%)')).toEqual('rgba(220,254,237,0.5)');
+		expect(colorcolor('rgba(220  254  237 / 0.75)')).toEqual('rgba(220,254,237,0.75)');
+		expect(colorcolor('rgba(220.5  254  237 / 75%)')).toEqual('rgba(220,254,237,0.75)');
+		expect(colorcolor('rgba(85%  99%  92.5% / 0.3)')).toEqual('rgba(216,252,234,0.3)');
+	});
+
 	it('calculates opacity', () => {
 		expect(colorcolor('#dfe', 'rgba', true)).toEqual('rgba(0,255,128,0.1333)');
 		expect(colorcolor('#dfe', 'rgba', false)).toEqual('rgba(221,255,238,1)');

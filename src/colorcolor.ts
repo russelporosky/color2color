@@ -642,6 +642,14 @@ export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
  */
 const toPercent = (amount: number, limit: number) => amount / limit;
 
+/**
+ * Converts a percentage (as a range from 0 to 100) to a decimal.
+ *
+ * @param percent
+ * @param maxDecimal
+ */
+const fromPercent = (percent: number, maxDecimal: number) => maxDecimal * percent / 100;
+
 const ColorDefinitions: ColorDefinitions = {
 	'hex': {
 		example: ['#00ff00', '#336699'],
@@ -655,7 +663,7 @@ const ColorDefinitions: ColorDefinitions = {
 	},
 	'hex3': {
 		example: ['#0f0', '#369'],
-		re: /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
+		re: /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/,
 		toRGBA: bits => [
 			parseInt(bits[RedIndex] + bits[RedIndex], HexRadix),
 			parseInt(bits[GreenIndex] + bits[GreenIndex], HexRadix),
@@ -675,7 +683,7 @@ const ColorDefinitions: ColorDefinitions = {
 	},
 	'hex4a': {
 		example: ['#fb0f', '#f0f8'],
-		re: /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
+		re: /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/,
 		toRGBA: bits => [
 			parseInt(bits[RedIndex] + bits[RedIndex], HexRadix),
 			parseInt(bits[GreenIndex] + bits[GreenIndex], HexRadix),
@@ -741,24 +749,53 @@ const ColorDefinitions: ColorDefinitions = {
 		},
 	},
 	'rgb': {
-		example: ['rgb(123, 234, 45)', 'rgb(255,234,245)'],
-		re: /^rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\s*\)$/,
-		toRGBA: bits => [
-			parseInt(bits[RedIndex], DecimalRadix),
-			parseInt(bits[GreenIndex], DecimalRadix),
-			parseInt(bits[BlueIndex], DecimalRadix),
-			MaxOpacity,
+		example: [
+			'rgb(123, 234, 45)',
+			'rgb(255,234,245)',
+			'rgb(200 100 25)',
+			'rgb(200 100.75 25)',
+			'rgb(75% 100% 25.5%)',
 		],
+		re: /^rgb\(\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)\s*\)$/,
+		toRGBA: bits => {
+			const ConvertedBits = bits
+				.map(bit => bit.charAt(bit.length - 1) === '%' ? fromPercent(parseInt(bit, DecimalRadix), MaxRgbRange) - 1 : bit)
+				.map(bit => `${bit}`);
+
+			return [
+				parseInt(ConvertedBits[RedIndex], DecimalRadix),
+				parseInt(ConvertedBits[GreenIndex], DecimalRadix),
+				parseInt(ConvertedBits[BlueIndex], DecimalRadix),
+				MaxOpacity,
+			];
+		},
 	},
 	'rgba': {
-		example: ['rgba(123, 234, 45, 1)', 'rgba(255,234,245, 0.5)'],
-		re: /^rgba\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d+(?:\.\d+)?|\.\d+)\s*\)/,
-		toRGBA: bits => [
-			parseInt(bits[RedIndex], DecimalRadix),
-			parseInt(bits[GreenIndex], DecimalRadix),
-			parseInt(bits[BlueIndex], DecimalRadix),
-			parseFloat(bits[AlphaIndex]),
+		example: [
+			'rgba(123, 234, 45, 1)',
+			'rgba(255,234,245, 0.5)',
+			'rgba(200 100 25 / 0.5)',
+			'rgba(75%, 50%, 25%, 50%)',
+			'rgba(75%  50%  25% / 50%)',
 		],
+		re: /^rgba\(\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\/?\s*(\d+(?:\.\d+)?%?|\.\d+%?)\s*\)$/,
+		toRGBA: bits => {
+			const ConvertedBits = bits
+				.map(bit => bit.charAt(bit.length - 1) === '%' ? fromPercent(parseInt(bit, DecimalRadix), MaxRgbRange) - 1 : bit)
+				.map(bit => `${bit}`);
+
+			if (bits[AlphaIndex].charAt(bits[AlphaIndex].length - 1) === '%') {
+				// override so that the alpha channel is a float instead of an integer
+				ConvertedBits[AlphaIndex] = `${fromPercent(parseInt(bits[AlphaIndex], DecimalRadix), MaxOpacity)}`;
+			}
+
+			return [
+				parseInt(ConvertedBits[RedIndex], DecimalRadix),
+				parseInt(ConvertedBits[GreenIndex], DecimalRadix),
+				parseInt(ConvertedBits[BlueIndex], DecimalRadix),
+				parseFloat(ConvertedBits[AlphaIndex]),
+			];
+		},
 	},
 };
 
