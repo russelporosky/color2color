@@ -760,7 +760,7 @@ const ColorDefinitions: ColorDefinitions = {
 		toRGBA: bits => {
 			const ConvertedBits = bits
 				.map(bit => bit.charAt(bit.length - 1) === '%' ? fromPercent(parseInt(bit, DecimalRadix), MaxRgbRange) - 1 : bit)
-				.map(bit => `${bit}`);
+				.map(bit => `${ bit }`);
 
 			return [
 				parseInt(ConvertedBits[RedIndex], DecimalRadix),
@@ -778,15 +778,16 @@ const ColorDefinitions: ColorDefinitions = {
 			'rgba(75%, 50%, 25%, 50%)',
 			'rgba(75%  50%  25% / 50%)',
 		],
+		// eslint-disable-next-line max-len
 		re: /^rgba\(\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\/?\s*(\d+(?:\.\d+)?%?|\.\d+%?)\s*\)$/,
 		toRGBA: bits => {
 			const ConvertedBits = bits
 				.map(bit => bit.charAt(bit.length - 1) === '%' ? fromPercent(parseInt(bit, DecimalRadix), MaxRgbRange) - 1 : bit)
-				.map(bit => `${bit}`);
+				.map(bit => `${ bit }`);
 
 			if (bits[AlphaIndex].charAt(bits[AlphaIndex].length - 1) === '%') {
 				// override so that the alpha channel is a float instead of an integer
-				ConvertedBits[AlphaIndex] = `${fromPercent(parseInt(bits[AlphaIndex], DecimalRadix), MaxOpacity)}`;
+				ConvertedBits[AlphaIndex] = `${ fromPercent(parseInt(bits[AlphaIndex], DecimalRadix), MaxOpacity) }`;
 			}
 
 			return [
@@ -813,7 +814,7 @@ const ColorDefinitions: ColorDefinitions = {
  * @param targetColor The CSS color type to convert to
  * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
  */
-export function colorcolor (
+export function colorcolor(
 	originalColor: string,
 	targetColor: ColorType = ColorName.RGBA,
 	calculateOpacity = false,
@@ -824,43 +825,59 @@ export function colorcolor (
 
 	switch (targetColor) {
 		case ColorName.HEX: {
-			const hex = (returnedComponent as Hex);
+			const hex = (
+				returnedComponent as Hex
+			);
 			returnedColor = `#${ hex.r }${ hex.g }${ hex.b }`;
 			break;
 		}
 		case ColorName.HEXA: {
-			const hexa = (returnedComponent as Hexa);
+			const hexa = (
+				returnedComponent as Hexa
+			);
 			returnedColor = `#${ hexa.r }${ hexa.g }${ hexa.b }${ hexa.a }`;
 			break;
 		}
 		case ColorName.HSB: {
-			const hsb = (returnedComponent as Hsb);
+			const hsb = (
+				returnedComponent as Hsb
+			);
 			returnedColor = `hsb(${ hsb.h },${ hsb.s }%,${ hsb.b }%)`;
 			break;
 		}
 		case ColorName.HSL: {
-			const hsl = (returnedComponent as Hsl);
+			const hsl = (
+				returnedComponent as Hsl
+			);
 			returnedColor = `hsl(${ hsl.h },${ hsl.s }%,${ hsl.l }%)`;
 			break;
 		}
 		case ColorName.HSLA: {
-			const hsl = (returnedComponent as Hsla);
+			const hsl = (
+				returnedComponent as Hsla
+			);
 			returnedColor = `hsla(${ hsl.h },${ hsl.s }%,${ hsl.l }%,${ hsl.a })`;
 			break;
 		}
 		case ColorName.HSV: {
-			const hsv = (returnedComponent as Hsv);
+			const hsv = (
+				returnedComponent as Hsv
+			);
 			returnedColor = `hsv(${ hsv.h },${ hsv.s }%,${ hsv.v }%)`;
 			break;
 		}
 		case ColorName.RGB: {
-			const rgb = (returnedComponent as Rgb);
+			const rgb = (
+				returnedComponent as Rgb
+			);
 			returnedColor = `rgb(${ rgb.r },${ rgb.g },${ rgb.b })`;
 			break;
 		}
 		case ColorName.RGBA:
 		default: {
-			const rgba = (returnedComponent as Rgba);
+			const rgba = (
+				returnedComponent as Rgba
+			);
 			returnedColor = `rgba(${ rgba.r },${ rgba.g },${ rgba.b },${ rgba.a })`;
 			break;
 		}
