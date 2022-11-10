@@ -150,6 +150,8 @@ const namedColors = {
 };
 
 const AlphaPrecision = 4;
+const AngleIndex = 1;
+const AngleTypeIndex = 2;
 const DecimalRadix = 10;
 const HexRadix = 16;
 const LowerDecimalLimit = 0;
@@ -640,7 +642,7 @@ export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
  * @param amount
  * @param limit
  */
-const toPercent = (amount: number, limit: number) => amount / limit;
+const toPercent = (amount: number, limit: number): number => amount / limit;
 
 /**
  * Converts a percentage (as a range from 0 to 100) to a decimal.
@@ -648,7 +650,39 @@ const toPercent = (amount: number, limit: number) => amount / limit;
  * @param percent
  * @param maxDecimal
  */
-const fromPercent = (percent: number, maxDecimal: number) => maxDecimal * percent / 100;
+const fromPercent = (percent: number, maxDecimal: number): number => maxDecimal * percent / 100;
+
+/**
+ * Convert gradians, radians, and turns to degrees.
+ *
+ * @param source
+ */
+const toDegrees = (source: string): number => {
+	const Angle = /^\s*(\d*\.?\d+)(deg|rad|turn|grad)?$/i.exec(source);
+	let response = 0;
+
+	if (Angle && Angle.length > 1) {
+		const AngleAmount = Angle[AngleIndex] ?? 0;
+		const AngleType = Angle[AngleTypeIndex]?.toLowerCase() ?? 'deg';
+
+		switch (AngleType) {
+			case 'deg':
+				response = +AngleAmount;
+				break;
+			case 'grad':
+				response = +AngleAmount / 400 * 360;
+				break;
+			case 'rad':
+				response = +AngleAmount * 180 / Math.PI;
+				break;
+			case 'turn':
+				response = +AngleAmount * 360;
+				break;
+		}
+	}
+
+	return response;
+};
 
 const ColorDefinitions: ColorDefinitions = {
 	'hex': {
@@ -707,9 +741,11 @@ const ColorDefinitions: ColorDefinitions = {
 	},
 	'hsl': {
 		example: ['hsl(120, 100%, 25%)', 'hsl(0, 100%, 50%)'],
-		re: /^hsl\(\s*(\d*\.?\d+),\s*(\d*\.?\d+)%,\s*(\d*\.?\d+)%\s*\)$/,
+		re: /^hsl\(\s*(\d*\.?\d+(?:deg|grad|rad|turn)?)[, ]\s*(\d*\.?\d+)%[, ]\s*(\d*\.?\d+)%\s*\)$/,
 		toRGBA: bits => {
+			bits[1] = `${toDegrees(bits[1])}`;
 			bits[AlphaIndex] = `${ MaxOpacity }`;
+
 			const rgba = hslToRgb(bits);
 
 			return [
@@ -722,8 +758,14 @@ const ColorDefinitions: ColorDefinitions = {
 	},
 	'hsla': {
 		example: ['hsla(120, 100%, 25%, 1)', 'hsla(0, 100%, 50%, 0.5)'],
-		re: /^hsla\(\s*(\d*\.?\d+),\s*(\d*\.?\d+)%,\s*(\d*\.?\d+)%,\s*(\d+(?:\.\d+)?|\.\d+)\s*\)/,
+		re: /^hsla\(\s*(\d*\.?\d+(?:deg|grad|rad|turn)?)[, ]\s*(\d*\.?\d+)%[, ]\s*(\d*\.?\d+)%[, ]\/?\s*(\d+(?:\.\d+)?%?|\.\d+%?)\s*\)$/,
 		toRGBA: bits => {
+			bits[1] = `${toDegrees(bits[1])}`;
+			if (bits[AlphaIndex].charAt(bits[AlphaIndex].length - 1) === '%') {
+				// override so that the alpha channel is a float instead of an integer
+				bits[AlphaIndex] = `${ fromPercent(parseInt(bits[AlphaIndex], DecimalRadix), MaxOpacity) }`;
+			}
+
 			const rgba = hslToRgb(bits);
 
 			return [

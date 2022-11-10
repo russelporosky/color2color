@@ -8,6 +8,20 @@ describe('colorcolor', () => {
 		expect(colorcolor('hsla(208,100%,97.1%, 0.6)')).toEqual('rgba(240,248,255,0.6)');
 	});
 
+	it('reads valid HSL strings', () => {
+		expect(colorcolor('hsl(0.35turn, 75%, 90%)')).toEqual('rgba(210,249,214,1)');
+		expect(colorcolor('hsl(1.5rad 75% 90%)')).toEqual('rgba(232,249,210,1)');
+		expect(colorcolor('hsl(200grad, 45.75%, 80.6667%)')).toEqual('rgba(183,228,228,1)');
+		expect(colorcolor('hsl(200 45.75% 80.6667%)')).toEqual('rgba(183,213,228,1)');
+	});
+
+	it('reads valid HSLA strings', () => {
+		expect(colorcolor('hsla(0.35turn, 75%, 90%, .75)')).toEqual('rgba(210,249,214,0.75)');
+		expect(colorcolor('hsla(1.5rad 75% 90% / 75%)')).toEqual('rgba(232,249,210,0.75)');
+		expect(colorcolor('hsla(200grad, 45.75%, 80.6667%, 75%)')).toEqual('rgba(183,228,228,0.75)');
+		expect(colorcolor('hsla(200 45.75% 80.6667% / 0.75)')).toEqual('rgba(183,213,228,0.75)');
+	});
+
 	it('reads valid RGB strings', () => {
 		expect(colorcolor('rgb(220, 254, 237)')).toEqual('rgba(220,254,237,1)');
 		expect(colorcolor('rgb(220.5, 254, 237)')).toEqual('rgba(220,254,237,1)');
