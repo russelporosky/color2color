@@ -8,6 +8,12 @@ describe('colorcolor', () => {
 		expect(colorcolor('hsla(208,100%,97.1%, 0.6)')).toEqual('rgba(240,248,255,0.6)');
 	});
 
+	it('reads valid CSS Color Name strings', () => {
+		expect(colorcolor('AliceBlue')).toEqual('rgba(240,248,255,1)')
+		expect(colorcolor('RebeccaPurple')).toEqual('rgba(102,51,153,1)')
+		expect(colorcolor('transparent')).toEqual('rgba(255,255,255,0)')
+	});
+
 	it('reads valid HSL strings', () => {
 		expect(colorcolor('hsl(0.35turn, 75%, 90%)')).toEqual('rgba(210,249,214,1)');
 		expect(colorcolor('hsl(1.5rad 75% 90%)')).toEqual('rgba(232,249,210,1)');
