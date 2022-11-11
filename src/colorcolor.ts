@@ -192,6 +192,7 @@ enum ColorName {
 	HSLA = 'hsla',
 	HSB = 'hsb',
 	HSV = 'hsv',
+	HWB = 'hwb',
 	RGB = 'rgb',
 	RGBA = 'rgba',
 }
@@ -234,6 +235,13 @@ type Hsv = {
 	h: number;
 	s: number;
 	v: number;
+}
+
+type Hwb = {
+	h: number;
+	w: number;
+	b: number;
+	a: number;
 }
 
 type Rgb = {
@@ -295,67 +303,22 @@ export const calculateOpacityFromWhite = (r: number, g: number, b: number): numb
  */
 export const hslToRgb = (bits: string[]): Rgba => {
 	const hsl: Hsla = {
-		h: +bits[1] / MaxDegrees,
+		h: +bits[1] % MaxDegrees,
 		s: +bits[2] / MaxPercent,
 		l: +bits[3] / MaxPercent,
 		a: parseFloat(bits[4]),
 	};
-	const rgba: Rgba = {
-		r: 0,
-		g: 0,
-		b: 0,
-		a: 0,
-	};
 
-	if (hsl.s === MinPercent) {
-		const v = MaxRgb * hsl.l;
-		rgba.r = v;
-		rgba.g = v;
-		rgba.b = v;
-		rgba.a = hsl.a;
-	} else {
-		const q = hsl.l < 0.5 ?
-			hsl.l *
-			(
-				1 + hsl.s
-			) :
-			(
-				hsl.l + hsl.s
-			) -
-			(
-				hsl.l * hsl.s
-			);
-		const p = 2 * hsl.l - q;
-		rgba.r =
-			+(
-				hueToRgb(
-					p,
-					q,
-					hsl.h +
-					(
-						1 / 3
-					),
-				) * MaxRgb
-			).toFixed(MaxFixed);
-		rgba.g =
-			+(
-				hueToRgb(p, q, hsl.h) * MaxRgb
-			).toFixed(MaxFixed);
-		rgba.b =
-			+(
-				hueToRgb(
-					p,
-					q,
-					hsl.h -
-					(
-						1 / 3
-					),
-				) * MaxRgb
-			).toFixed(MaxFixed);
-		rgba.a = hsl.a;
+	if (hsl.h < 0) {
+		hsl.h += MaxDegrees;
 	}
 
-	return rgba;
+	return {
+		r: hueToRgb(0, hsl.h, hsl.s, hsl.l),
+		g: hueToRgb(8, hsl.h, hsl.s, hsl.l),
+		b: hueToRgb(4, hsl.h, hsl.s, hsl.l),
+		a: hsl.a,
+	};
 };
 
 /**
@@ -444,43 +407,49 @@ export const hsvToRgb = (bits: string[]): Rgb => {
 /**
  * Converts a given hue (from an HSL color) to the RGB decimal value.
  *
- * @param p
- * @param q
- * @param originalT
+ * @param num
+ * @param hue
+ * @param saturation
+ * @param lightness
  */
-const hueToRgb = (p: number, q: number, originalT: number): number => {
-	let t = originalT;
+export const hueToRgb = (num: number, hue: number, saturation: number, lightness: number) => {
+	const K = (num + hue / 30) % 12;
+	const A = saturation * Math.min(lightness, 1 - lightness);
 
-	if (originalT < 0) {
-		t += 1;
-	}
-	if (originalT > 1) {
-		t -= 1;
-	}
-	if (t < 1 / 6) {
-		return p +
-			(
-				q - p
-			) *
-			6 *
-			t;
-	}
-	if (t < 1 / 2) {
-		return q;
-	}
-	if (t < 2 / 3) {
-		return p +
-			(
-				q - p
-			) *
-			(
-				(
-					2 / 3 - t
-				) * 6
-			);
+	return (lightness - A * Math.max(-1, Math.min(K - 3, 9 - K, 1))) * MaxRgb;
+};
+
+/**
+ * Convert an HWB color value to the RGB equivalent.
+ *
+ * @param bits The result of a regular expression that captures the three or four components of an HWB color value
+ */
+export const hwbToRgb = (bits: string[]): Rgba => {
+	const hwb: Hwb = {
+		h: +bits[1] / MaxDegrees,
+		w: +bits[2] / MaxPercent,
+		b: +bits[3] / MaxPercent,
+		a: parseFloat(bits[4]),
+	};
+	const rgba: Rgba = hslToRgb([
+		bits[0],
+		bits[1],
+		'100',
+		'50',
+		bits[4],
+	]);
+	const totalBrightness = hwb.w + hwb.b;
+
+	if (totalBrightness >= 1) {
+		hwb.w = +((hwb.w / totalBrightness).toFixed(MaxFixed));
+		hwb.b = +((hwb.b / totalBrightness).toFixed(MaxFixed));
 	}
 
-	return p;
+	rgba.r = ((rgba.r / MaxRgb * (1 - hwb.w - hwb.b)) + hwb.w) * MaxRgb;
+	rgba.g = ((rgba.g / MaxRgb * (1 - hwb.w - hwb.b)) + hwb.w) * MaxRgb;
+	rgba.b = ((rgba.b / MaxRgb * (1 - hwb.w - hwb.b)) + hwb.w) * MaxRgb;
+
+	return rgba;
 };
 
 /**
@@ -638,6 +607,27 @@ export const rgbToHsv = (r: number, g: number, b: number, a: number): Hsv => {
 };
 
 /**
+ * Convert an RGB color to an HWB color.
+ *
+ * @param r Red decimal value
+ * @param g Green decimal value
+ * @param b Blue decimal value
+ * @param a Opacity float value
+ */
+export const rgbToHwb = (r: number, g: number, b: number, a: number): Hwb => {
+	const hsl = rgbToHsl(r, g, b, a);
+	const white = toPercent(Math.min(r, g, b), MaxRgbRange);
+	const black = (1 - toPercent(Math.max(r, g, b), MaxRgbRange));
+
+	return {
+		h: parseFloat(hsl.h.toFixed(MaxFixed)),
+		w: parseFloat((white * MaxPercent).toFixed(MaxFixed)),
+		b: parseFloat((black * MaxPercent).toFixed(MaxFixed)),
+		a: hsl.a,
+	};
+};
+
+/**
  * Gives the percent as a value between 0 and 1.
  *
  * @param amount
@@ -791,6 +781,30 @@ const ColorDefinitions: ColorDefinitions = {
 			];
 		},
 	},
+	'hwb': {
+		example: [
+			'hwb(180 50% 25%)',
+			'hwb(180 50% 25% / 75%)',
+		],
+		re: /^hwb\(\s*(\d*\.?\d+(?:deg|grad|rad|turn)?)\s+(\d*\.?\d+)%\s+(\d*\.?\d+)%(?:\s+\/\s+)?(\d+(?:\.\d+)?%?|\.\d+%?)?\s*\)?$/,
+		toRGBA: bits => {
+			bits[1] = `${toDegrees(bits[1])}`;
+			bits[AlphaIndex] = bits[AlphaIndex] || `${ MaxOpacity }`;
+			if (bits[AlphaIndex].charAt(bits[AlphaIndex].length - 1) === '%') {
+				// override so that the alpha channel is a float instead of an integer
+				bits[AlphaIndex] = `${ fromPercent(parseInt(bits[AlphaIndex], DecimalRadix), MaxOpacity) }`;
+			}
+
+			const rgba = hwbToRgb(bits);
+
+			return [
+				rgba.r,
+				rgba.g,
+				rgba.b,
+				rgba.a,
+			];
+		},
+	},
 	'rgb': {
 		example: [
 			'rgb(123, 234, 45)',
@@ -862,7 +876,7 @@ export function colorcolor(
 	targetColor: ColorType = ColorName.RGBA,
 	calculateOpacity = false,
 ): string {
-	const returnedComponent: Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba = colorcolorRaw(originalColor, targetColor, calculateOpacity);
+	const returnedComponent: Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Hwb | Rgb | Rgba = colorcolorRaw(originalColor, targetColor, calculateOpacity);
 
 	let returnedColor: string;
 
@@ -909,6 +923,13 @@ export function colorcolor(
 			returnedColor = `hsv(${ hsv.h },${ hsv.s }%,${ hsv.v }%)`;
 			break;
 		}
+		case ColorName.HWB: {
+			const hwb = (
+				returnedComponent as Hwb
+			);
+			returnedColor = `hwb(${ hwb.h } ${ hwb.w }% ${ hwb.b }% / ${ hwb.a })`;
+			break;
+		}
 		case ColorName.RGB: {
 			const rgb = (
 				returnedComponent as Rgb
@@ -948,7 +969,7 @@ export function colorcolorRaw(
 	originalColor: string,
 	targetColor: ColorType = ColorName.RGBA,
 	calculateOpacity = false,
-): Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba {
+): Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Hwb | Rgb | Rgba {
 	let a = 0;
 	let b = 0;
 	let convertedColor = originalColor.toLowerCase();
@@ -956,8 +977,9 @@ export function colorcolorRaw(
 	let hsb: Hsv;
 	let hsl: Hsla;
 	let hsv: Hsv;
+	let hwb: Hwb;
 	let r = 0;
-	let returnedComponent: Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba;
+	let returnedComponent: Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Hwb | Rgb | Rgba;
 
 	// convert named color to hex
 	if (Object.prototype.hasOwnProperty.call(namedColors, convertedColor)) {
@@ -1085,6 +1107,15 @@ export function colorcolorRaw(
 				h: hsv.h,
 				s: hsv.s,
 				v: hsv.v,
+			};
+			break;
+		case ColorName.HWB:
+			hwb = rgbToHwb(r, g, b, a);
+			returnedComponent = {
+				h: hwb.h,
+				w: hwb.w,
+				b: hwb.b,
+				a: hwb.a,
 			};
 			break;
 		case ColorName.RGB:

@@ -5,6 +5,7 @@ declare enum ColorName {
     HSLA = "hsla",
     HSB = "hsb",
     HSV = "hsv",
+    HWB = "hwb",
     RGB = "rgb",
     RGBA = "rgba"
 }
@@ -41,6 +42,12 @@ declare type Hsv = {
     s: number;
     v: number;
 };
+declare type Hwb = {
+    h: number;
+    w: number;
+    b: number;
+    a: number;
+};
 declare type Rgb = {
     r: number;
     g: number;
@@ -73,6 +80,21 @@ export declare const hslToRgb: (bits: string[]) => Rgba;
  */
 export declare const hsvToRgb: (bits: string[]) => Rgb;
 /**
+ * Converts a given hue (from an HSL color) to the RGB decimal value.
+ *
+ * @param num
+ * @param hue
+ * @param saturation
+ * @param lightness
+ */
+export declare const hueToRgb: (num: number, hue: number, saturation: number, lightness: number) => number;
+/**
+ * Convert an HWB color value to the RGB equivalent.
+ *
+ * @param bits The result of a regular expression that captures the three or four components of an HWB color value
+ */
+export declare const hwbToRgb: (bits: string[]) => Rgba;
+/**
  * Converts decimal to hexadecimal, ensuring a leading 0 if the result is a single digit.
  *
  * @param n
@@ -96,6 +118,15 @@ export declare const rgbToHsl: (r: number, g: number, b: number, a: number) => H
  * @param a Opacity float value
  */
 export declare const rgbToHsv: (r: number, g: number, b: number, a: number) => Hsv;
+/**
+ * Convert an RGB color to an HWB color.
+ *
+ * @param r Red decimal value
+ * @param g Green decimal value
+ * @param b Blue decimal value
+ * @param a Opacity float value
+ */
+export declare const rgbToHwb: (r: number, g: number, b: number, a: number) => Hwb;
 /**
  * Convert a color string in any valid CSS format (RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, or HSB) into another format.
  *
@@ -126,5 +157,5 @@ export declare function colorcolor(originalColor: string, targetColor?: ColorTyp
  * @param targetColor The CSS color type to convert to
  * @param calculateOpacity If the target color has an opacity value (HexA, HSLA, or RGBA), the result will be correct if viewed against a white background
  */
-export declare function colorcolorRaw(originalColor: string, targetColor?: ColorType, calculateOpacity?: boolean): Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Rgb | Rgba;
+export declare function colorcolorRaw(originalColor: string, targetColor?: ColorType, calculateOpacity?: boolean): Hex | Hexa | Hsb | Hsl | Hsla | Hsv | Hwb | Rgb | Rgba;
 export {};

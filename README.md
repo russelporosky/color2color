@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/metaloha/color2color/actions/workflows/node.js.yml/badge.svg)](https://github.com/metaloha/color2color/actions)
 
-The colorcolor function converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings.
+The colorcolor function converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB/HWB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB/HWB color strings.
 
 ## Demo
 
@@ -18,9 +18,9 @@ The colorcolor function converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color string
 
 	import { colorcolor } from 'colorcolor';
 
-	colorcolor( string originalColor, [string newColorType( rgba|hex|hexa|rgb|hsl|hsla|hsv )], [bool calculateOpacity( false|true )]
+	colorcolor( string originalColor, [string newColorType( rgba|hex|hexa|rgb|hsl|hsla|hsv|hwb )], [bool calculateOpacity( false|true )]
 
-The first argument is the original color string in RGB, RGBA, Hex, HexA, HSL, HSLA, or HSV format.
+The first argument is the original color string in RGB, RGBA, Hex, HexA, HSL, HSLA, HSV, or HWB format.
 
 The second argument (optional) is which format you'd like the new color string to be in. This will always default to `'rgba'`.
 
