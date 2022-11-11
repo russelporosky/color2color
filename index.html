@@ -52,7 +52,7 @@
 	<hgroup>
 		<h1>colorcolor Javascript Function</h1>
 		<h2>Version 2.0.8, Released 2022/11/10</h2>
-		<h3><a href="https://opensource.org/licenses/MIT">MIT</a>, Copyright 2016 Metaloha</h3>
+		<h3><a href="https://opensource.org/licenses/MIT">MIT</a>, Copyright 2022 Russel Porosky</h3>
 		<a href="https://github.com/metaloha/color2color/actions"><img src="https://github.com/metaloha/color2color/actions/workflows/node.js.yml/badge.svg" alt="Build status"></a>
 	</hgroup>
 </header>
@@ -86,11 +86,14 @@
 	<p><code>var newColor = colorcolor( "#dfe" ); // Returns "<span id="c2c1"></span>"</code></p>
 	<p><code>var newColor = colorcolor( "#036", "rgb" ); // Returns "<span id="c2c2"></span>"</code></p>
 	<p><code>var newColor = colorcolor( "rgba(64,64,64,0.5)" ); // Returns "<span id="c2c3"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "rgb(64,64,64)", "hex" ); // Returns "<span id="c2c4"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "#dfe", "rgba", true ); // Returns "<span id="c2c5"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "hsla(109,100%,37%,1)" ); // Returns "<span id="c2c6"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "rgba(35,189,0,0.75)", "hsl" ); // Returns "<span id="c2c7"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "#3fa796", "hsla" ); // Returns "<span id="c2c8"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "rgba(64 64 64 / 0.5)" ); // Returns "<span id="c2c4"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "rgb(64,64,64)", "hex" ); // Returns "<span id="c2c5"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "#dfe", "rgba", true ); // Returns "<span id="c2c6"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "hsla(109,100%,37%,1)" ); // Returns "<span id="c2c7"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "hsla(0.35turn 70% 55% / 1)" ); // Returns "<span id="c2c8"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "rgba(35,189,0,0.75)", "hsl" ); // Returns "<span id="c2c9"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "rgba(85%,55%,10.5%,70%)", "hsl" ); // Returns "<span id="c2c10"></span>"</code></p>
+	<p><code>var newColor = colorcolor( "#3fa796a0", "hsla" ); // Returns "<span id="c2c11"></span>"</code></p>
 </article>
 <article>
 	<header>
@@ -110,11 +113,14 @@
 		$( "#c2c1" ).html( colorcolor( "#dfe" ) );
 		$( "#c2c2" ).html( colorcolor( "#036", "rgb" ) );
 		$( "#c2c3" ).html( colorcolor( "rgba(64,64,64,0.5)" ) );
-		$( "#c2c4" ).html( colorcolor( "rgb(64,64,64)", "hex" ) );
-		$( "#c2c5" ).html( colorcolor( "#dfe", "rgba", true ) );
-		$( "#c2c6" ).html( colorcolor( "hsla(109,100%,37%,1)" ) );
-		$( "#c2c7" ).html( colorcolor( "rgba(35,189,0,0.75)", "hsl" ) );
-		$( "#c2c8" ).html( colorcolor( "#3fa796", "hsla" ) );
+		$( "#c2c4" ).html( colorcolor( "rgba(64 64 64 / 0.5)" ) );
+		$( "#c2c5" ).html( colorcolor( "rgb(64,64,64)", "hex" ) );
+		$( "#c2c6" ).html( colorcolor( "#dfe", "rgba", true ) );
+		$( "#c2c7" ).html( colorcolor( "hsla(109,100%,37%,1)" ) );
+		$( "#c2c8" ).html( colorcolor( "hsla(0.35turn 70% 55% / 1)" ) );
+		$( "#c2c9" ).html( colorcolor( "rgba(35,189,0,0.75)", "hsl" ) );
+		$( "#c2c10" ).html( colorcolor( "rgba(85%,55%,10.5%,70%)", "hsl" ) );
+		$( "#c2c11" ).html( colorcolor( "#3fa796a0", "hsla" ) );
 	});
 </script>
 </body>
