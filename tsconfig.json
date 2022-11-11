@@ -7,7 +7,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
-      "es2015",
+      "es5",
       "dom",
     ],
     "module": "es2015",
@@ -25,7 +25,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,
-    "target": "es5"
+    "target": "es3"
   },
   "exclude": [
     "dist",

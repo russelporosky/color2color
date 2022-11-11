@@ -140,15 +140,18 @@ var namedColors = {
     'teal': '#008080',
     'thistle': '#d8bfd8',
     'tomato': '#ff6347',
+    'transparent': '#fff0',
     'turquoise': '#40e0d0',
     'violet': '#ee82ee',
     'wheat': '#f5deb3',
     'white': '#ffffff',
     'whitesmoke': '#f5f5f5',
     'yellow': '#ffff00',
-    'yellowgreen': '#9acd32',
+    'yellowgreen': '#9acd32'
 };
 var AlphaPrecision = 4;
+var AngleIndex = 1;
+var AngleTypeIndex = 2;
 var DecimalRadix = 10;
 var HexRadix = 16;
 var LowerDecimalLimit = 0;
@@ -212,13 +215,13 @@ export var hslToRgb = function (bits) {
         h: +bits[1] / MaxDegrees,
         s: +bits[2] / MaxPercent,
         l: +bits[3] / MaxPercent,
-        a: parseFloat(bits[4]),
+        a: parseFloat(bits[4])
     };
     var rgba = {
         r: 0,
         g: 0,
         b: 0,
-        a: 0,
+        a: 0
     };
     if (hsl.s === MinPercent) {
         var v = MaxRgb * hsl.l;
@@ -255,12 +258,12 @@ export var hsvToRgb = function (bits) {
     var rgb = {
         r: 0,
         g: 0,
-        b: 0,
+        b: 0
     };
     var hsv = {
         h: +bits[1] / MaxDegrees,
         s: +bits[2] / MaxPercent,
-        v: +bits[3] / MaxPercent,
+        v: +bits[3] / MaxPercent
     };
     var i = Math.floor(hsv.h * 6);
     var f = hsv.h * 6 - i;
@@ -362,7 +365,7 @@ export var rgbToHsl = function (r, g, b, a) {
         r: r / MaxRgb,
         g: g / MaxRgb,
         b: b / MaxRgb,
-        a: a,
+        a: a
     };
     var max = Math.max(rgba.r, rgba.g, rgba.b);
     var min = Math.min(rgba.r, rgba.g, rgba.b);
@@ -371,7 +374,7 @@ export var rgbToHsl = function (r, g, b, a) {
         h: 0,
         s: 0,
         l: (max + min) / 2,
-        a: rgba.a,
+        a: rgba.a
     };
     if (max !== min) {
         hsl.s =
@@ -419,7 +422,7 @@ export var rgbToHsv = function (r, g, b, a) {
         r: toPercent(r % MaxRgbRange, MaxRgbRange),
         g: toPercent(g % MaxRgbRange, MaxRgbRange),
         b: toPercent(b % MaxRgbRange, MaxRgbRange),
-        a: a,
+        a: a
     };
     var max = Math.max(rgba.r, rgba.g, rgba.b);
     var min = Math.min(rgba.r, rgba.g, rgba.b);
@@ -427,7 +430,7 @@ export var rgbToHsv = function (r, g, b, a) {
     var hsv = {
         h: 0,
         s: max === MinPercent ? MinPercent : diff / max,
-        v: max,
+        v: max
     };
     if (max !== min) {
         switch (max) {
@@ -463,6 +466,42 @@ export var rgbToHsv = function (r, g, b, a) {
  * @param limit
  */
 var toPercent = function (amount, limit) { return amount / limit; };
+/**
+ * Converts a percentage (as a range from 0 to 100) to a decimal.
+ *
+ * @param percent
+ * @param maxDecimal
+ */
+var fromPercent = function (percent, maxDecimal) { return maxDecimal * percent / 100; };
+/**
+ * Convert gradians, radians, and turns to degrees.
+ *
+ * @param source
+ */
+var toDegrees = function (source) {
+    var _a, _b, _c;
+    var Angle = /^\s*(\d*\.?\d+)(deg|rad|turn|grad)?$/i.exec(source);
+    var response = 0;
+    if (Angle && Angle.length > 1) {
+        var AngleAmount = (_a = Angle[AngleIndex]) !== null && _a !== void 0 ? _a : 0;
+        var AngleType = (_c = (_b = Angle[AngleTypeIndex]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) !== null && _c !== void 0 ? _c : 'deg';
+        switch (AngleType) {
+            case 'deg':
+                response = +AngleAmount;
+                break;
+            case 'grad':
+                response = +AngleAmount / 400 * 360;
+                break;
+            case 'rad':
+                response = +AngleAmount * 180 / Math.PI;
+                break;
+            case 'turn':
+                response = +AngleAmount * 360;
+                break;
+        }
+    }
+    return response;
+};
 var ColorDefinitions = {
     'hex': {
         example: ['#00ff00', '#336699'],
@@ -472,17 +511,17 @@ var ColorDefinitions = {
             parseInt(bits[GreenIndex], HexRadix),
             parseInt(bits[BlueIndex], HexRadix),
             MaxOpacity,
-        ]; },
+        ]; }
     },
     'hex3': {
         example: ['#0f0', '#369'],
-        re: /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
+        re: /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/,
         toRGBA: function (bits) { return [
             parseInt(bits[RedIndex] + bits[RedIndex], HexRadix),
             parseInt(bits[GreenIndex] + bits[GreenIndex], HexRadix),
             parseInt(bits[BlueIndex] + bits[BlueIndex], HexRadix),
             MaxOpacity,
-        ]; },
+        ]; }
     },
     'hexa': {
         example: ['#00ff00ff', '#336699a0'],
@@ -492,17 +531,17 @@ var ColorDefinitions = {
             parseInt(bits[GreenIndex], HexRadix),
             parseInt(bits[BlueIndex], HexRadix),
             parseInt(bits[AlphaIndex], HexRadix) / MaxOpacitySteps,
-        ]; },
+        ]; }
     },
     'hex4a': {
         example: ['#fb0f', '#f0f8'],
-        re: /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
+        re: /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/,
         toRGBA: function (bits) { return [
             parseInt(bits[RedIndex] + bits[RedIndex], HexRadix),
             parseInt(bits[GreenIndex] + bits[GreenIndex], HexRadix),
             parseInt(bits[BlueIndex] + bits[BlueIndex], HexRadix),
             parseInt(bits[AlphaIndex] + bits[AlphaIndex], HexRadix) / MaxOpacitySteps,
-        ]; },
+        ]; }
     },
     'hsb': {
         example: ['hsb(120, 100%, 25%)', 'hsb(0, 100%, 50%)'],
@@ -515,12 +554,13 @@ var ColorDefinitions = {
                 rgb.b,
                 MaxOpacity,
             ];
-        },
+        }
     },
     'hsl': {
         example: ['hsl(120, 100%, 25%)', 'hsl(0, 100%, 50%)'],
-        re: /^hsl\(\s*(\d*\.?\d+),\s*(\d*\.?\d+)%,\s*(\d*\.?\d+)%\s*\)$/,
+        re: /^hsl\(\s*(\d*\.?\d+(?:deg|grad|rad|turn)?)[, ]\s*(\d*\.?\d+)%[, ]\s*(\d*\.?\d+)%\s*\)$/,
         toRGBA: function (bits) {
+            bits[1] = "".concat(toDegrees(bits[1]));
             bits[AlphaIndex] = "".concat(MaxOpacity);
             var rgba = hslToRgb(bits);
             return [
@@ -529,12 +569,17 @@ var ColorDefinitions = {
                 rgba.b,
                 rgba.a,
             ];
-        },
+        }
     },
     'hsla': {
         example: ['hsla(120, 100%, 25%, 1)', 'hsla(0, 100%, 50%, 0.5)'],
-        re: /^hsla\(\s*(\d*\.?\d+),\s*(\d*\.?\d+)%,\s*(\d*\.?\d+)%,\s*(\d+(?:\.\d+)?|\.\d+)\s*\)/,
+        re: /^hsla\(\s*(\d*\.?\d+(?:deg|grad|rad|turn)?)[, ]\s*(\d*\.?\d+)%[, ]\s*(\d*\.?\d+)%[, ]\/?\s*(\d+(?:\.\d+)?%?|\.\d+%?)\s*\)$/,
         toRGBA: function (bits) {
+            bits[1] = "".concat(toDegrees(bits[1]));
+            if (bits[AlphaIndex].charAt(bits[AlphaIndex].length - 1) === '%') {
+                // override so that the alpha channel is a float instead of an integer
+                bits[AlphaIndex] = "".concat(fromPercent(parseInt(bits[AlphaIndex], DecimalRadix), MaxOpacity));
+            }
             var rgba = hslToRgb(bits);
             return [
                 rgba.r,
@@ -542,7 +587,7 @@ var ColorDefinitions = {
                 rgba.b,
                 rgba.a,
             ];
-        },
+        }
     },
     'hsv': {
         example: ['hsv(120, 100%, 25%)', 'hsv(0, 100%, 50%)'],
@@ -555,28 +600,55 @@ var ColorDefinitions = {
                 rgb.b,
                 MaxOpacity,
             ];
-        },
+        }
     },
     'rgb': {
-        example: ['rgb(123, 234, 45)', 'rgb(255,234,245)'],
-        re: /^rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\s*\)$/,
-        toRGBA: function (bits) { return [
-            parseInt(bits[RedIndex], DecimalRadix),
-            parseInt(bits[GreenIndex], DecimalRadix),
-            parseInt(bits[BlueIndex], DecimalRadix),
-            MaxOpacity,
-        ]; },
+        example: [
+            'rgb(123, 234, 45)',
+            'rgb(255,234,245)',
+            'rgb(200 100 25)',
+            'rgb(200 100.75 25)',
+            'rgb(75% 100% 25.5%)',
+        ],
+        re: /^rgb\(\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)\s*\)$/,
+        toRGBA: function (bits) {
+            var ConvertedBits = bits
+                .map(function (bit) { return bit.charAt(bit.length - 1) === '%' ? fromPercent(parseInt(bit, DecimalRadix), MaxRgbRange) - 1 : bit; })
+                .map(function (bit) { return "".concat(bit); });
+            return [
+                parseInt(ConvertedBits[RedIndex], DecimalRadix),
+                parseInt(ConvertedBits[GreenIndex], DecimalRadix),
+                parseInt(ConvertedBits[BlueIndex], DecimalRadix),
+                MaxOpacity,
+            ];
+        }
     },
     'rgba': {
-        example: ['rgba(123, 234, 45, 1)', 'rgba(255,234,245, 0.5)'],
-        re: /^rgba\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d+(?:\.\d+)?|\.\d+)\s*\)/,
-        toRGBA: function (bits) { return [
-            parseInt(bits[RedIndex], DecimalRadix),
-            parseInt(bits[GreenIndex], DecimalRadix),
-            parseInt(bits[BlueIndex], DecimalRadix),
-            parseFloat(bits[AlphaIndex]),
-        ]; },
-    },
+        example: [
+            'rgba(123, 234, 45, 1)',
+            'rgba(255,234,245, 0.5)',
+            'rgba(200 100 25 / 0.5)',
+            'rgba(75%, 50%, 25%, 50%)',
+            'rgba(75%  50%  25% / 50%)',
+        ],
+        // eslint-disable-next-line max-len
+        re: /^rgba\(\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\s*(\d{1,3}(?:\.\d+)?%?|\.\d+%?)[, ]\/?\s*(\d+(?:\.\d+)?%?|\.\d+%?)\s*\)$/,
+        toRGBA: function (bits) {
+            var ConvertedBits = bits
+                .map(function (bit) { return bit.charAt(bit.length - 1) === '%' ? fromPercent(parseInt(bit, DecimalRadix), MaxRgbRange) - 1 : bit; })
+                .map(function (bit) { return "".concat(bit); });
+            if (bits[AlphaIndex].charAt(bits[AlphaIndex].length - 1) === '%') {
+                // override so that the alpha channel is a float instead of an integer
+                ConvertedBits[AlphaIndex] = "".concat(fromPercent(parseInt(bits[AlphaIndex], DecimalRadix), MaxOpacity));
+            }
+            return [
+                parseInt(ConvertedBits[RedIndex], DecimalRadix),
+                parseInt(ConvertedBits[GreenIndex], DecimalRadix),
+                parseInt(ConvertedBits[BlueIndex], DecimalRadix),
+                parseFloat(ConvertedBits[AlphaIndex]),
+            ];
+        }
+    }
 };
 /**
  * Convert a color string in any valid CSS format (RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, or HSB) into another format.
@@ -710,7 +782,7 @@ export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
             returnedComponent = {
                 r: numberToHex(r),
                 g: numberToHex(g),
-                b: numberToHex(b),
+                b: numberToHex(b)
             };
             break;
         case ColorName.HEXA:
@@ -721,7 +793,7 @@ export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
                 r: numberToHex(r),
                 g: numberToHex(g),
                 b: numberToHex(b),
-                a: numberToHex(Math.round(UpperDecimalLimit * a)),
+                a: numberToHex(Math.round(UpperDecimalLimit * a))
             };
             break;
         case ColorName.HSB:
@@ -729,7 +801,7 @@ export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
             returnedComponent = {
                 h: hsb.h,
                 s: hsb.s,
-                b: hsb.v,
+                b: hsb.v
             };
             break;
         case ColorName.HSL:
@@ -737,7 +809,7 @@ export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
             returnedComponent = {
                 h: hsl.h,
                 s: hsl.s,
-                l: hsl.l,
+                l: hsl.l
             };
             break;
         case ColorName.HSLA:
@@ -749,7 +821,7 @@ export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
                 h: hsl.h,
                 s: hsl.s,
                 l: hsl.l,
-                a: hsl.a,
+                a: hsl.a
             };
             break;
         case ColorName.HSV:
@@ -757,14 +829,14 @@ export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
             returnedComponent = {
                 h: hsv.h,
                 s: hsv.s,
-                v: hsv.v,
+                v: hsv.v
             };
             break;
         case ColorName.RGB:
             returnedComponent = {
                 r: r,
                 g: g,
-                b: b,
+                b: b
             };
             break;
         case ColorName.RGBA:
@@ -777,7 +849,7 @@ export function colorcolorRaw(originalColor, targetColor, calculateOpacity) {
                 r: r,
                 g: g,
                 b: b,
-                a: a,
+                a: a
             };
             break;
     }
