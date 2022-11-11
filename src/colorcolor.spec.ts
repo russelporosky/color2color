@@ -28,6 +28,13 @@ describe('colorcolor', () => {
 		expect(colorcolor('hsla(200 45.75% 80.6667% / 0.75)')).toEqual('rgba(183,213,228,0.75)');
 	});
 
+	it('reads valid HWB strings', () => {
+		expect(colorcolor('hwb(180 50% 25%)')).toEqual('rgba(128,191,191,1)');
+		expect(colorcolor('hwb(200grad 50% 25%)')).toEqual('rgba(128,191,191,1)');
+		expect(colorcolor('hwb(180 50% 25% / 75%)')).toEqual('rgba(128,191,191,0.75)');
+		expect(colorcolor('hwb(200grad 50% 25% / 0.75)')).toEqual('rgba(128,191,191,0.75)');
+	});
+
 	it('reads valid RGB strings', () => {
 		expect(colorcolor('rgb(220, 254, 237)')).toEqual('rgba(220,254,237,1)');
 		expect(colorcolor('rgb(220.5, 254, 237)')).toEqual('rgba(220,254,237,1)');
@@ -74,6 +81,10 @@ describe('colorcolor', () => {
 			expect(colorcolor('AliceBlue', 'hsv')).toEqual('hsv(208,5.9%,99.6%)');
 		});
 
+		it('hwb should return hwb(208 94% 0% / 1)', () => {
+			expect(colorcolor('AliceBlue', 'hwb')).toEqual('hwb(208 94% 0% / 1)');
+		});
+
 		it('rgb should return rgb(240,248,255)', () => {
 			expect(colorcolor('AliceBlue', 'rgb')).toEqual('rgb(240,248,255)');
 		});
@@ -106,6 +117,10 @@ describe('colorcolor', () => {
 
 		it('hsv should return hsv(150,13.3%,99.6%)', () => {
 			expect(colorcolor('#dfea', 'hsv')).toEqual('hsv(150,13.3%,99.6%)');
+		});
+
+		it('hwb should return hwb(150 86% 0% / 0.6667)', () => {
+			expect(colorcolor('#dfea', 'hwb')).toEqual('hwb(150 86% 0% / 0.6667)');
 		});
 
 		it('rgb should return rgb(221,255,238)', () => {
