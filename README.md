@@ -31,9 +31,12 @@ The final argument (optional) will include a calculated opacity against white if
 	var newColor = colorcolor( '#dfe' ); // Returns 'rgba(221,255,238,1)'
 	var newColor = colorcolor( '#036', 'rgb' ); // Returns 'rgb(0,51,102)'
 	var newColor = colorcolor( 'rgba(64,64,64,0.5)' ); // Returns 'rgba(64,64,64,0.5)'
+	var newColor = colorcolor( 'rgba(64 64 64 / 0.5)' ); // Returns 'rgba(64,64,64,0.5)'
+	var newColor = colorcolor( 'rgba(85%  99%  92.5% / 0.3)' ); // Returns 'rgba(216,252,234,0.3)'
 	var newColor = colorcolor( 'rgb(64,64,64)', 'hex' ); // Returns '#404040'
 	var newColor = colorcolor( '#dfe', 'rgba', true ); // Returns 'rgba(0,255,128,0.1333)'
 	var newColor = colorcolor( 'hsla(109,100%,37%,1)' ); // Returns 'rgba(35,189,0,1)'
+	var newColor = colorcolor( 'hsla(200grad, 45.75%, 80.6667%, 75%)' ); // Returns 'rgba(183,228,228,0.75)'
 	var newColor = colorcolor( 'rgba(35,189,0,0.75)', 'hsl' ); // Returns 'hsl(109,100%,37%)'
 
 ## Testing

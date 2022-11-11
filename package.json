@@ -1,6 +1,6 @@
 {
   "name": "colorcolor",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "colorcolor converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB color strings.",
   "main": "./dist/colorcolor.js",
   "types": "./dist/colorcolor.d.ts",
