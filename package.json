@@ -47,6 +47,7 @@
     "typescript": "^4.8.4",
     "uglify-js": "^3.17.3"
   },
+  "type": "module",
   "dependencies": {
     "css-color-names": "^1.0.1"
   },
