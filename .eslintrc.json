@@ -31,10 +31,6 @@
       ],
       "rules": {
         "@typescript-eslint/array-type": "error",
-        "@typescript-eslint/comma-dangle": [
-          "error",
-          "always-multiline"
-        ],
         "@typescript-eslint/consistent-type-assertions": "error",
         "@typescript-eslint/default-param-last": "error",
         "@typescript-eslint/lines-between-class-members": [
@@ -57,10 +53,6 @@
         ],
         "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-useless-constructor": "error",
-        "@typescript-eslint/quotes": [
-          "error",
-          "single"
-        ],
         "@typescript-eslint/unbound-method": [
           "error",
           {
@@ -69,59 +61,25 @@
         ],
         "import/no-extraneous-dependencies": "error",
         "accessor-pairs": "error",
-        "array-bracket-newline": [
-          "error",
-          "consistent"
-        ],
-        "array-bracket-spacing": [
-          "error",
-          "never"
-        ],
         "array-callback-return": "error",
         "arrow-body-style": [
           "error",
           "as-needed"
         ],
-        "arrow-parens": [
-          "error",
-          "as-needed"
-        ],
-        "arrow-spacing": "error",
         "block-scoped-var": "error",
-        "block-spacing": "error",
-        "brace-style": "error",
         "camelcase": "warn",
         "comma-dangle": "off",
         "complexity": [
           "warn",
-          10
+          12
         ],
         "consistent-return": "error",
         "default-case-last": "error",
         "default-param-last": "off",
-        "dot-location": [
-          "error",
-          "property"
-        ],
         "grouped-accessor-pairs": "warn",
         "guard-for-in": "error",
-        "indent": [
-          "error",
-          "tab",
-          {
-            "SwitchCase": 1
-          }
-        ],
         "lines-between-class-members": "off",
-        "max-len": [
-          "error",
-          {
-            "code": 150,
-            "ignoreComments": true,
-            "ignoreTrailingComments": true,
-            "ignoreUrls": true
-          }
-        ],
+        "max-len": "off",
         "no-alert": "warn",
         "no-array-constructor": "off",
         "no-console": [
@@ -136,29 +94,25 @@
         "no-duplicate-imports": "error",
         "no-else-return": "error",
         "no-empty-function": "off",
-        "no-extra-parens": [
-          "error",
-          "functions"
-        ],
         "no-lone-blocks": "error",
         "no-lonely-if": "error",
         "no-loop-func": "error",
         "no-magic-numbers": "off",
-        "no-multi-spaces": "error",
-        "no-multiple-empty-lines": [
-          "error",
-          {
-            "max": 1,
-            "maxBOF": 0,
-            "maxEOF": 0
-          }
-        ],
         "no-negated-condition": "error",
         "no-param-reassign": "error",
         "no-promise-executor-return": "error",
-        "no-sequences": "error",
+        "no-restricted-syntax": [
+          "error",
+          "SequenceExpression"
+        ],
+        "no-sequences": "off",
+        "no-tabs": [
+          "error",
+          {
+            "allowIndentationTabs": true
+          }
+        ],
         "no-template-curly-in-string": "error",
-        "no-trailing-spaces": "error",
         "no-throw-literal": "error",
         "no-unmodified-loop-condition": "warn",
         "no-unneeded-ternary": "warn",
@@ -170,27 +124,8 @@
         "no-useless-rename": "error",
         "no-useless-return": "error",
         "no-var": "error",
-        "object-curly-newline": [
-          "error",
-          {
-            "ExportDeclaration": {
-              "multiline": true
-            },
-            "ImportDeclaration": {
-              "multiline": true
-            }
-          }
-        ],
-        "object-curly-spacing": [
-          "error",
-          "always"
-        ],
         "object-shorthand": "warn",
         "one-var": [
-          "error",
-          "never"
-        ],
-        "padded-blocks": [
           "error",
           "never"
         ],

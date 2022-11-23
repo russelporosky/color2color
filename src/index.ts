@@ -1,0 +1,1 @@
+export { colorcolor } from './colorcolor';
