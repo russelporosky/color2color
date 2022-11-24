@@ -6,9 +6,8 @@
 	<title>colorcolor Javascript Demo</title>
 	<meta name="description" content="A Javascript color string conversion function.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<script type="module" src="colorcolor.min.js"></script>
-	<style type="text/css">
+	<script src="colorcolor.min.js"></script>
+	<style>
 		body {
 			background-color: #eee;
 			color: #222;
@@ -42,6 +41,19 @@
 		code {
 			font-size: 1.3em;
 		}
+		div.codeBlock {
+			background-color: rgba(255, 255, 255, 1);
+			display: block;
+			padding: 1rem;
+		}
+		div.codeBlock ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		div.codeBlock li {
+			margin: 0.25rem 0;
+		}
 		ul {
 			margin: 0 0 0.8em 1em;
 		}
@@ -50,17 +62,19 @@
 <body>
 <header>
 	<hgroup>
-		<h1>colorcolor Javascript Function</h1>
-		<h2>Version 2.1.0, Released 2022/11/11</h2>
+		<h1>colorcolor Javascript Library</h1>
+		<h2>Version 3.0.0, Released 2022/11/24</h2>
 		<h3><a href="https://opensource.org/licenses/MIT">MIT</a>, Copyright 2022 Russel Porosky</h3>
-		<a href="https://github.com/metaloha/color2color/actions"><img src="https://github.com/metaloha/color2color/actions/workflows/node.js.yml/badge.svg" alt="Build status"></a>
 	</hgroup>
+	<p>
+		<a href="https://badge.fury.io/js/colorcolor"><img src="https://badge.fury.io/js/colorcolor.svg" alt="NPM version"></a>
+		<a href="https://github.com/metaloha/color2color/actions"><img src="https://github.com/metaloha/color2color/actions/workflows/node.js.yml/badge.svg" alt="Build status"></a></p>
 </header>
 <article>
 	<header>
 		<h2>Description</h2>
 	</header>
-	<p><strong>colorcolor</strong> converts a color string in these CSS formats (RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, HSV, or HWB) into another format (also RGB, RGBA, Hex, HexA, HSL, HSLA, HSB, HSV, or HWB).</p>
+	<p><strong>colorcolor</strong> converts a color string in these CSS formats (HEX, HEXA, HSB, HSL, HSLA, HSV, HWB, RGB, or RGBA) into another format (also HEX, HEXA, HSB, HSL, HSLA, HSV, HWB, RGB, or RGBA).</p>
 </article>
 <article>
 	<header>
@@ -68,41 +82,31 @@
 	</header>
 	<p><code>colorcolor</code> is available via NPM:</p>
 	<p><code>npm install colorcolor</code></p>
-	<p>Of course, you can also just download the minified distribution file from here instead if you prefer :)</p>
+	<p>Or download the minified distribution file from <a href="https://raw.githubusercontent.com/metaloha/color2color/oh-the-refactormanity/dist/colorcolor.min.js">Github</a> instead if you prefer :)</p>
 </article>
 <article>
 	<header>
 		<h2>Usage</h2>
 	</header>
-	<p><code>colorcolor( <em>string originalColor</em>, [<em>string newColorType( <strong>rgba</strong>|hex|rgb|hsl|hsla|hsv )</em>], [<em>bool calculateOpacity( <strong>false</strong>|true</em> )]</code></p>
-	<p>The first argument is the original color string in RGB, RGBA, Hex, HSL, HSLA, HSV, or HWB format.</p>
-	<p>The second argument (optional) is which format you'd like the new color string to be in. This will always default to <code>"rgba"</code>.</p>
-	<p>The final argument (optional) will include a calculated opacity against white if the second argument is <code>"rgba"</code>, <code>"hexa"</code>, or <code>"hsla"</code>.</p>
+	<p><code>colorcolor(originalColor: string, [newColorType: string(hex|hexa|hsb|hsl|hsla|hsv|hwb|rgb|rgba) = 'rgba'])</code></p>
+	<p>The first argument is the original color string in HEX, HEXA, HSB, HSL, HSLA, HSV, HWB, RGB, or RGBA format.</p>
+	<p>The second argument (optional) is which format you'd like the new color string to be in. The default is <code>'rgba'</code>.</p>
 </article>
 <article>
 	<header>
 		<h2>Examples</h2>
 	</header>
-	<p><code>var newColor = colorcolor( "#dfe" ); // Returns "<span id="c2c1"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "#036", "rgb" ); // Returns "<span id="c2c2"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "rgba(64,64,64,0.5)" ); // Returns "<span id="c2c3"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "rgba(64 64 64 / 0.5)" ); // Returns "<span id="c2c4"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "rgb(64,64,64)", "hex" ); // Returns "<span id="c2c5"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "#dfe", "rgba", true ); // Returns "<span id="c2c6"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "hsla(109,100%,37%,1)" ); // Returns "<span id="c2c7"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "hsla(0.35turn 70% 55% / 1)" ); // Returns "<span id="c2c8"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "rgba(35,189,0,0.75)", "hsl" ); // Returns "<span id="c2c9"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "rgba(85%,55%,10.5%,70%)", "hsl" ); // Returns "<span id="c2c10"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "#3fa796a0", "hsla" ); // Returns "<span id="c2c11"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "hwb(200grad 50% 25% / 0.75)" ); // Returns "<span id="c2c12"></span>"</code></p>
-	<p><code>var newColor = colorcolor( "AliceBlue", "hwb" ); // Returns "<span id="c2c13"></span>"</code></p>
+	<p><em>This is a live list - if the library is working, a list of examples will appear.</em></p>
+	<div class="codeBlock">
+		<ul id="colorExamples"></ul>
+	</div>
 </article>
 <article>
 	<header>
 		<h2>Release Notes</h2>
 	</header>
-	<p><a href="http://github.com/metaloha/color2color">GitHub Repository</a></p>
-	<p>This should work pretty much anywhere, actually. As long as the browser supports <a href="https://caniuse.com/es6-module-dynamic-import">JavaScript modules</a>, at least.</p>
+	<p><a href="https://github.com/metaloha/color2color">GitHub Repository</a></p>
+	<p>This should work pretty much anywhere, including IE 11.</p>
 </article>
 <article>
 	<header>
@@ -110,24 +114,33 @@
 	</header>
 	<p>You can run <code>npm run test</code> to run the tests alone. The testing will also run after every change made while <code>npm run test:watch</code> is watching for changes.</p>
 </article>
-<script type="module">
-	import { colorcolor } from "/color2color/colorcolor.min.js";
+<script>
+	var colorExamplesList = document.getElementById('colorExamples');
+	var testCalls = [
+		['#dfe'],
+		['#036', 'rgb'],
+		['rgba(64,64,64,0.5)'],
+		['rgba(64 64 64 / 0.5)'],
+		['rgb(64,64,64)', 'hex'],
+		['#dfe', 'rgba', true],
+		['hsla(109,100%,37%,1)'],
+		['hsla(0.35turn 70% 55% / 1)'],
+		['rgba(35,189,0,0.75)', 'hsl'],
+		['rgba(85%,55%,10.5%,70%)', 'hsl'],
+		['#3fa796a0', 'hsla'],
+		['hwb(200grad 50% 25% / 0.75)'],
+		['AliceBlue', 'hwb'],
+	];
 
-	$(document).ready(function(){
-		$( "#c2c1" ).html( colorcolor( "#dfe" ) );
-		$( "#c2c2" ).html( colorcolor( "#036", "rgb" ) );
-		$( "#c2c3" ).html( colorcolor( "rgba(64,64,64,0.5)" ) );
-		$( "#c2c4" ).html( colorcolor( "rgba(64 64 64 / 0.5)" ) );
-		$( "#c2c5" ).html( colorcolor( "rgb(64,64,64)", "hex" ) );
-		$( "#c2c6" ).html( colorcolor( "#dfe", "rgba", true ) );
-		$( "#c2c7" ).html( colorcolor( "hsla(109,100%,37%,1)" ) );
-		$( "#c2c8" ).html( colorcolor( "hsla(0.35turn 70% 55% / 1)" ) );
-		$( "#c2c9" ).html( colorcolor( "rgba(35,189,0,0.75)", "hsl" ) );
-		$( "#c2c10" ).html( colorcolor( "rgba(85%,55%,10.5%,70%)", "hsl" ) );
-		$( "#c2c11" ).html( colorcolor( "#3fa796a0", "hsla" ) );
-		$( "#c2c12" ).html( colorcolor( "hwb(200grad 50% 25% / 0.75)" ) );
-		$( "#c2c13" ).html( colorcolor( "AliceBlue", "hwb" ) );
-	});
+	for (var i = 0; i < testCalls.length; i++) {
+		let newColorExampleItem = document.createElement('li');
+		let newColorExampleCode = document.createElement('code');
+		let targetColor = testCalls[i][1] ? ', \'' + testCalls[i][1] + '\'' : '';
+		newColorExampleCode.innerHTML = 'colorcolor(\'' + testCalls[i][0] + '\'' + targetColor + ') === ' + colorcolor(testCalls[i][0], testCalls[i][1] || '');
+
+		newColorExampleItem.appendChild(newColorExampleCode);
+		colorExamplesList.appendChild(newColorExampleItem);
+	}
 </script>
 </body>
 </html>
