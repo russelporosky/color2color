@@ -34,12 +34,13 @@ export const colorcolor = (
 	originalColor: string,
 	targetColor: ColorType = ColorName.RGBA,
 ): string => {
-	const Color = colorcolorObject(originalColor, targetColor);
+	const TargetColor = (targetColor.toLowerCase() || 'rgba') as ColorType;
+	const Color = colorcolorObject(originalColor, TargetColor);
 
 	let colorObject: ColorModel;
 	let returnedColor = '';
 
-	switch (targetColor.toLowerCase() as ColorType) {
+	switch (TargetColor) {
 		case ColorName.HEX:
 			colorObject = Color as HEXA;
 			returnedColor = `#${colorObject.r}${colorObject.g}${colorObject.b}`;

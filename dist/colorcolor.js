@@ -1,5 +1,8 @@
-(function (exports) {
-  'use strict';
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.colorcolor = factory());
+})(this, (function () { 'use strict';
 
   var aliceblue = "#f0f8ff";
   var antiquewhite = "#faebd7";
@@ -1762,10 +1765,11 @@
    */
   var colorcolor = function (originalColor, targetColor) {
       if (targetColor === void 0) { targetColor = ColorName.RGBA; }
-      var Color = colorcolorObject(originalColor, targetColor);
+      var TargetColor = (targetColor.toLowerCase() || 'rgba');
+      var Color = colorcolorObject(originalColor, TargetColor);
       var colorObject;
       var returnedColor = '';
-      switch (targetColor.toLowerCase()) {
+      switch (TargetColor) {
           case ColorName.HEX:
               colorObject = Color;
               returnedColor = "#".concat(colorObject.r).concat(colorObject.g).concat(colorObject.b);
@@ -1846,11 +1850,7 @@
       return finalColor;
   };
 
-  exports.colorcolor = colorcolor;
+  return colorcolor;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-  return exports;
-
-})({});
+}));
 //# sourceMappingURL=colorcolor.js.map

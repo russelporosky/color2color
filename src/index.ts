@@ -1,1 +1,3 @@
-export { colorcolor } from './colorcolor';
+import { colorcolor } from './colorcolor';
+
+export default colorcolor;

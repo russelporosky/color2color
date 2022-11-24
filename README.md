@@ -29,15 +29,19 @@ to `'rgba'`.
 ## Examples
 
 ```ts
-newColor = colorcolor('#dfe'); // 'rgba(221,255,238,1)'
-newColor = colorcolor('#036', 'rgb'); // 'rgb(0,51,102)'
-newColor = colorcolor('rgba(64,64,64,0.5)'); // 'rgba(64,64,64,0.5)'
-newColor = colorcolor('rgba(64 64 64 / 0.5)'); // 'rgba(64,64,64,0.5)'
-newColor = colorcolor('rgba(85%  99%  92.5% / 0.3)'); // 'rgba(216,252,234,0.3)'
-newColor = colorcolor('rgb(64,64,64)', 'hex'); // '#404040'
-newColor = colorcolor('hsla(109,100%,37%,1)'); // 'rgba(35,189,0,1)'
-newColor = colorcolor('hsla(200grad, 45.75%, 80.6667%, 75%)'); // 'rgba(183,228,228,0.75)'
-newColor = colorcolor('rgba(35,189,0,0.75)', 'hsl'); // 'hsl(109,100%,37%)'
+colorcolor('#dfe') === 'rgba(221, 255, 238, 1)'
+colorcolor('#036', 'rgb') === 'rgb(0, 51, 102)'
+colorcolor('rgba(64,64,64,0.5)') === 'rgba(64, 64, 64, 0.5)'
+colorcolor('rgba(64 64 64 / 0.5)') === 'rgba(64, 64, 64, 0.5)'
+colorcolor('rgb(64,64,64)', 'hex') === '#404040'
+colorcolor('#dfe', 'rgba') === 'rgba(221, 255, 238, 1)'
+colorcolor('hsla(109,100%,37%,1)') === 'rgba(35, 189, 0, 1)'
+colorcolor('hsla(0.35turn 70% 55% / 1)') === 'rgba(60, 221, 76, 1)'
+colorcolor('rgba(35,189,0,0.75)', 'hsl') === 'hsl(109, 100%, 37%)'
+colorcolor('rgba(85%,55%,10.5%,70%)', 'hsl') === 'hsl(36, 78%, 48%)'
+colorcolor('#3fa796a0', 'hsla') === 'hsla(170, 45%, 45%, 0.63)'
+colorcolor('hwb(200grad 50% 25% / 0.75)') === 'rgba(128, 191, 191, 0.75)'
+colorcolor('AliceBlue', 'hwb') === 'hwb(208 94% 0% / 1)'
 ```
 
 ## Valid color formats

@@ -7,18 +7,12 @@ export default {
 	input: './src/index.ts',
 	output: [
 		{
+			exports: 'default',
+			extend: true,
 			file: './dist/colorcolor.js',
-			format: 'iife',
-			sourcemap: true,
-		},
-		{
-			file: './dist/colorcolor.cjs',
-			format: 'cjs',
-			sourcemap: true,
-		},
-		{
-			file: './dist/colorcolor.es.js',
-			format: 'es',
+			format: 'umd',
+			name: 'colorcolor',
+			noConflict: false,
 			sourcemap: true,
 		},
 	],
@@ -27,7 +21,9 @@ export default {
 			tsconfig: './src/tsconfig.app.json',
 		}),
 		json(),
-		nodeResolve(),
+		nodeResolve({
+			browser: true,
+		}),
 		sourcemaps(),
 	],
 };
