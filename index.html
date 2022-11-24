@@ -136,7 +136,7 @@
 		let newColorExampleItem = document.createElement('li');
 		let newColorExampleCode = document.createElement('code');
 		let targetColor = testCalls[i][1] ? ', \'' + testCalls[i][1] + '\'' : '';
-		newColorExampleCode.innerHTML = 'colorcolor(\'' + testCalls[i][0] + '\'' + targetColor + ') === ' + colorcolor(testCalls[i][0], testCalls[i][1] || '');
+		newColorExampleCode.innerHTML = 'colorcolor(\'' + testCalls[i][0] + '\'' + targetColor + ') === \'' + colorcolor(testCalls[i][0], testCalls[i][1] || '') + '\';';
 
 		newColorExampleItem.appendChild(newColorExampleCode);
 		colorExamplesList.appendChild(newColorExampleItem);
