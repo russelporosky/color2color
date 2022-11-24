@@ -1,3 +1,13 @@
+## v3.0.0
+* added HWB support
+* update converters to directly convert between formats instead of to RGBA first
+* now understands all valid formats for CSS color functions
+  * _Example:_ rgba(75% 50% 66% / 50%)
+* code is broken into multiple files for better readability and maintainability
+* greatly expanded test coverage
+* greatly expanded documentation for developers
+* distribution folder includes both module and ES versions
+
 ## v2.0.3
 * rebuilt with TypeScript
 * fixed HSB/HSL/HSLA/HSV to allow whitespace

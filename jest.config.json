@@ -1,0 +1,11 @@
+{
+  "coverageDirectory": "./documentation/coverage",
+  "moduleFileExtensions": [
+    "ts",
+    "js"
+  ],
+  "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|js)$",
+  "transform": {
+    ".ts": "ts-jest"
+  }
+}

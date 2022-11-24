@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1669277129991" clover="3.2.0">
+  <project timestamp="1669277129991" name="All files">
+    <metrics statements="353" coveredstatements="353" conditionals="135" coveredconditionals="115" methods="92" coveredmethods="92" elements="580" coveredelements="560" complexity="0" loc="353" ncloc="353" packages="2" files="11" classes="11"/>
+    <package name="src">
+      <metrics statements="164" coveredstatements="164" conditionals="51" coveredconditionals="49" methods="38" coveredmethods="38"/>
+      <file name="colorcolor.ts" path="C:\Users\russ\Projects\color2color\src\colorcolor.ts">
+        <metrics statements="56" coveredstatements="56" conditionals="19" coveredconditionals="17" methods="2" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="35" count="143" type="cond" truecount="1" falsecount="0"/>
+        <line num="37" count="130" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="130" type="stmt"/>
+        <line num="41" count="130" type="stmt"/>
+        <line num="43" count="130" type="cond" truecount="9" falsecount="0"/>
+        <line num="45" count="13" type="stmt"/>
+        <line num="46" count="13" type="stmt"/>
+        <line num="47" count="13" type="stmt"/>
+        <line num="49" count="13" type="stmt"/>
+        <line num="50" count="13" type="stmt"/>
+        <line num="51" count="13" type="stmt"/>
+        <line num="53" count="13" type="stmt"/>
+        <line num="54" count="13" type="stmt"/>
+        <line num="55" count="13" type="stmt"/>
+        <line num="57" count="13" type="stmt"/>
+        <line num="58" count="13" type="stmt"/>
+        <line num="59" count="13" type="stmt"/>
+        <line num="61" count="13" type="stmt"/>
+        <line num="62" count="13" type="stmt"/>
+        <line num="63" count="13" type="stmt"/>
+        <line num="65" count="13" type="stmt"/>
+        <line num="66" count="13" type="stmt"/>
+        <line num="67" count="13" type="stmt"/>
+        <line num="69" count="13" type="stmt"/>
+        <line num="70" count="13" type="stmt"/>
+        <line num="71" count="13" type="stmt"/>
+        <line num="73" count="13" type="stmt"/>
+        <line num="74" count="13" type="stmt"/>
+        <line num="75" count="13" type="stmt"/>
+        <line num="77" count="26" type="stmt"/>
+        <line num="78" count="26" type="stmt"/>
+        <line num="79" count="26" type="stmt"/>
+        <line num="82" count="130" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="98" count="130" type="cond" truecount="0" falsecount="1"/>
+        <line num="100" count="130" type="stmt"/>
+        <line num="102" count="130" type="stmt"/>
+        <line num="104" count="130" type="stmt"/>
+        <line num="107" count="130" type="cond" truecount="1" falsecount="0"/>
+        <line num="108" count="10" type="stmt"/>
+        <line num="111" count="130" type="stmt"/>
+        <line num="113" count="130" type="stmt"/>
+        <line num="114" count="1430" type="cond" truecount="1" falsecount="0"/>
+        <line num="115" count="1430" type="stmt"/>
+        <line num="116" count="1430" type="stmt"/>
+        <line num="117" count="1430" type="stmt"/>
+        <line num="119" count="1430" type="cond" truecount="1" falsecount="0"/>
+        <line num="121" count="130" type="stmt"/>
+        <line num="123" count="130" type="cond" truecount="1" falsecount="0"/>
+        <line num="130" count="130" type="stmt"/>
+        <line num="135" count="130" type="stmt"/>
+        <line num="141" count="130" type="stmt"/>
+      </file>
+      <file name="colors.ts" path="C:\Users\russ\Projects\color2color\src\colors.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <line num="92" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="97" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="107" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+      </file>
+      <file name="detectors.ts" path="C:\Users\russ\Projects\color2color\src\detectors.ts">
+        <metrics statements="29" coveredstatements="29" conditionals="12" coveredconditionals="12" methods="23" coveredmethods="23"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="368" type="stmt"/>
+        <line num="40" count="27" type="stmt"/>
+        <line num="47" count="40" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+        <line num="79" count="21" type="stmt"/>
+        <line num="100" count="11" type="stmt"/>
+        <line num="127" count="11" type="stmt"/>
+        <line num="148" count="11" type="stmt"/>
+        <line num="176" count="14" type="stmt"/>
+        <line num="181" count="13" type="stmt"/>
+        <line num="205" count="14" type="stmt"/>
+        <line num="211" count="14" type="stmt"/>
+        <line num="235" count="14" type="stmt"/>
+        <line num="241" count="14" type="stmt"/>
+        <line num="269" count="14" type="stmt"/>
+        <line num="274" count="13" type="stmt"/>
+        <line num="298" count="14" type="stmt"/>
+        <line num="304" count="26" type="stmt"/>
+        <line num="336" count="15" type="stmt"/>
+        <line num="338" count="60" type="cond" truecount="2" falsecount="0"/>
+        <line num="342" count="60" type="stmt"/>
+        <line num="344" count="15" type="stmt"/>
+        <line num="367" count="15" type="stmt"/>
+        <line num="369" count="75" type="cond" truecount="2" falsecount="0"/>
+        <line num="373" count="75" type="stmt"/>
+        <line num="375" count="15" type="stmt"/>
+      </file>
+      <file name="utilities.ts" path="C:\Users\russ\Projects\color2color\src\utilities.ts">
+        <metrics statements="66" coveredstatements="66" conditionals="16" coveredconditionals="16" methods="11" coveredmethods="11"/>
+        <line num="8" count="9" type="stmt"/>
+        <line num="9" count="9" type="stmt"/>
+        <line num="10" count="9" type="stmt"/>
+        <line num="11" count="9" type="stmt"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="13" count="9" type="stmt"/>
+        <line num="14" count="9" type="stmt"/>
+        <line num="17" count="9" type="stmt"/>
+        <line num="20" count="9" type="stmt"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="26" count="9" type="stmt"/>
+        <line num="29" count="9" type="stmt"/>
+        <line num="32" count="9" type="stmt"/>
+        <line num="35" count="9" type="stmt"/>
+        <line num="38" count="9" type="stmt"/>
+        <line num="41" count="9" type="stmt"/>
+        <line num="44" count="9" type="stmt"/>
+        <line num="47" count="9" type="stmt"/>
+        <line num="50" count="9" type="stmt"/>
+        <line num="53" count="9" type="stmt"/>
+        <line num="56" count="9" type="stmt"/>
+        <line num="59" count="9" type="stmt"/>
+        <line num="62" count="9" type="stmt"/>
+        <line num="65" count="9" type="stmt"/>
+        <line num="68" count="9" type="stmt"/>
+        <line num="71" count="9" type="stmt"/>
+        <line num="81" count="9" type="stmt"/>
+        <line num="82" count="4" type="stmt"/>
+        <line num="95" count="9" type="stmt"/>
+        <line num="96" count="549" type="stmt"/>
+        <line num="107" count="9" type="stmt"/>
+        <line num="108" count="83" type="stmt"/>
+        <line num="119" count="9" type="stmt"/>
+        <line num="120" count="168" type="stmt"/>
+        <line num="131" count="9" type="stmt"/>
+        <line num="132" count="292" type="stmt"/>
+        <line num="142" count="186" type="stmt"/>
+        <line num="155" count="9" type="stmt"/>
+        <line num="161" count="128" type="stmt"/>
+        <line num="162" count="128" type="stmt"/>
+        <line num="164" count="128" type="stmt"/>
+        <line num="178" count="9" type="stmt"/>
+        <line num="180" count="443" type="cond" truecount="1" falsecount="0"/>
+        <line num="181" count="441" type="stmt"/>
+        <line num="191" count="9" type="stmt"/>
+        <line num="192" count="112" type="stmt"/>
+        <line num="205" count="9" type="stmt"/>
+        <line num="206" count="232" type="stmt"/>
+        <line num="207" count="232" type="stmt"/>
+        <line num="209" count="232" type="cond" truecount="3" falsecount="0"/>
+        <line num="210" count="232" type="stmt"/>
+        <line num="211" count="232" type="cond" truecount="8" falsecount="0"/>
+        <line num="213" count="232" type="cond" truecount="4" falsecount="0"/>
+        <line num="215" count="198" type="stmt"/>
+        <line num="216" count="198" type="stmt"/>
+        <line num="218" count="3" type="stmt"/>
+        <line num="219" count="3" type="stmt"/>
+        <line num="221" count="9" type="stmt"/>
+        <line num="222" count="9" type="stmt"/>
+        <line num="224" count="22" type="stmt"/>
+        <line num="225" count="22" type="stmt"/>
+        <line num="230" count="232" type="stmt"/>
+        <line num="231" count="15" type="stmt"/>
+        <line num="234" count="232" type="stmt"/>
+        <line num="246" count="9" type="stmt"/>
+        <line num="247" count="323" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.converters">
+      <metrics statements="189" coveredstatements="189" conditionals="84" coveredconditionals="66" methods="54" coveredmethods="54"/>
+      <file name="hex.ts" path="C:\Users\russ\Projects\color2color\src\converters\hex.ts">
+        <metrics statements="20" coveredstatements="20" conditionals="14" coveredconditionals="11" methods="9" coveredmethods="9"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="21" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="37" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="42" count="12" type="stmt"/>
+        <line num="57" count="7" type="stmt"/>
+        <line num="58" count="7" type="stmt"/>
+        <line num="69" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="74" count="9" type="stmt"/>
+        <line num="85" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="90" count="14" type="stmt"/>
+        <line num="100" count="7" type="stmt"/>
+        <line num="101" count="7" type="stmt"/>
+        <line num="112" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="117" count="9" type="stmt"/>
+        <line num="127" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="132" count="6" type="stmt"/>
+        <line num="142" count="16" type="cond" truecount="1" falsecount="1"/>
+        <line num="147" count="16" type="stmt"/>
+      </file>
+      <file name="hsb.ts" path="C:\Users\russ\Projects\color2color\src\converters\hsb.ts">
+        <metrics statements="32" coveredstatements="32" conditionals="5" coveredconditionals="5" methods="9" coveredmethods="9"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="25" count="5" type="stmt"/>
+        <line num="26" count="5" type="stmt"/>
+        <line num="36" count="6" type="stmt"/>
+        <line num="37" count="6" type="stmt"/>
+        <line num="47" count="5" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="65" count="31" type="stmt"/>
+        <line num="66" count="31" type="stmt"/>
+        <line num="76" count="32" type="stmt"/>
+        <line num="77" count="32" type="stmt"/>
+        <line num="78" count="32" type="stmt"/>
+        <line num="79" count="32" type="stmt"/>
+        <line num="86" count="32" type="cond" truecount="1" falsecount="0"/>
+        <line num="87" count="32" type="cond" truecount="2" falsecount="0"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="89" count="31" type="cond" truecount="2" falsecount="0"/>
+        <line num="90" count="24" type="stmt"/>
+        <line num="92" count="7" type="stmt"/>
+        <line num="95" count="32" type="stmt"/>
+        <line num="97" count="32" type="stmt"/>
+        <line num="108" count="5" type="stmt"/>
+        <line num="122" count="5" type="stmt"/>
+        <line num="123" count="4" type="stmt"/>
+        <line num="125" count="4" type="stmt"/>
+        <line num="136" count="12" type="stmt"/>
+        <line num="137" count="12" type="stmt"/>
+        <line num="147" count="14" type="stmt"/>
+        <line num="148" count="14" type="stmt"/>
+        <line num="150" count="14" type="stmt"/>
+      </file>
+      <file name="hsl.ts" path="C:\Users\russ\Projects\color2color\src\converters\hsl.ts">
+        <metrics statements="37" coveredstatements="37" conditionals="22" coveredconditionals="16" methods="9" coveredmethods="9"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="26" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="41" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="6" type="stmt"/>
+        <line num="56" count="14" type="stmt"/>
+        <line num="57" count="14" type="stmt"/>
+        <line num="58" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="60" count="14" type="stmt"/>
+        <line num="75" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="80" count="2" type="stmt"/>
+        <line num="90" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="95" count="4" type="stmt"/>
+        <line num="110" count="6" type="stmt"/>
+        <line num="111" count="3" type="stmt"/>
+        <line num="113" count="3" type="stmt"/>
+        <line num="128" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="134" count="8" type="stmt"/>
+        <line num="135" count="8" type="stmt"/>
+        <line num="136" count="8" type="stmt"/>
+        <line num="137" count="8" type="stmt"/>
+        <line num="139" count="8" type="stmt"/>
+        <line num="155" count="39" type="cond" truecount="2" falsecount="0"/>
+        <line num="160" count="39" type="stmt"/>
+        <line num="170" count="43" type="cond" truecount="1" falsecount="1"/>
+        <line num="176" count="43" type="stmt"/>
+        <line num="177" count="43" type="cond" truecount="2" falsecount="0"/>
+        <line num="178" count="43" type="cond" truecount="1" falsecount="1"/>
+        <line num="179" count="43" type="stmt"/>
+        <line num="186" count="43" type="cond" truecount="2" falsecount="0"/>
+        <line num="187" count="1" type="stmt"/>
+        <line num="188" count="1" type="stmt"/>
+        <line num="189" count="1" type="stmt"/>
+        <line num="191" count="42" type="stmt"/>
+        <line num="192" count="42" type="stmt"/>
+        <line num="193" count="42" type="stmt"/>
+        <line num="196" count="43" type="stmt"/>
+      </file>
+      <file name="hsv.ts" path="C:\Users\russ\Projects\color2color\src\converters\hsv.ts">
+        <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="56" count="3" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="67" count="3" type="stmt"/>
+        <line num="68" count="3" type="stmt"/>
+        <line num="78" count="3" type="stmt"/>
+        <line num="92" count="3" type="stmt"/>
+        <line num="93" count="2" type="stmt"/>
+        <line num="103" count="3" type="stmt"/>
+        <line num="104" count="2" type="stmt"/>
+        <line num="114" count="4" type="stmt"/>
+        <line num="115" count="4" type="stmt"/>
+      </file>
+      <file name="hwb.ts" path="C:\Users\russ\Projects\color2color\src\converters\hwb.ts">
+        <metrics statements="35" coveredstatements="35" conditionals="17" coveredconditionals="13" methods="9" coveredmethods="9"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="26" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="41" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="6" type="stmt"/>
+        <line num="56" count="13" type="stmt"/>
+        <line num="57" count="13" type="stmt"/>
+        <line num="59" count="13" type="stmt"/>
+        <line num="74" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="79" count="4" type="stmt"/>
+        <line num="89" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="95" count="6" type="stmt"/>
+        <line num="96" count="6" type="stmt"/>
+        <line num="98" count="6" type="stmt"/>
+        <line num="112" count="3" type="stmt"/>
+        <line num="113" count="3" type="stmt"/>
+        <line num="115" count="3" type="stmt"/>
+        <line num="130" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="135" count="2" type="stmt"/>
+        <line num="150" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="155" count="11" type="stmt"/>
+        <line num="165" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="171" count="15" type="stmt"/>
+        <line num="172" count="15" type="stmt"/>
+        <line num="178" count="15" type="stmt"/>
+        <line num="179" count="15" type="stmt"/>
+        <line num="181" count="15" type="cond" truecount="1" falsecount="0"/>
+        <line num="182" count="1" type="stmt"/>
+        <line num="183" count="1" type="stmt"/>
+        <line num="186" count="15" type="stmt"/>
+        <line num="187" count="15" type="stmt"/>
+        <line num="188" count="15" type="stmt"/>
+        <line num="190" count="15" type="stmt"/>
+      </file>
+      <file name="index.ts" path="C:\Users\russ\Projects\color2color\src\converters\index.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+      </file>
+      <file name="rgb.ts" path="C:\Users\russ\Projects\color2color\src\converters\rgb.ts">
+        <metrics statements="41" coveredstatements="41" conditionals="26" coveredconditionals="21" methods="9" coveredmethods="9"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="24" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="40" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="45" count="6" type="stmt"/>
+        <line num="55" count="22" type="stmt"/>
+        <line num="56" count="22" type="stmt"/>
+        <line num="57" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="59" count="22" type="stmt"/>
+        <line num="74" count="58" type="cond" truecount="2" falsecount="0"/>
+        <line num="79" count="58" type="stmt"/>
+        <line num="89" count="60" type="cond" truecount="1" falsecount="1"/>
+        <line num="95" count="60" type="stmt"/>
+        <line num="96" count="60" type="stmt"/>
+        <line num="97" count="60" type="stmt"/>
+        <line num="98" count="60" type="stmt"/>
+        <line num="100" count="60" type="stmt"/>
+        <line num="101" count="60" type="stmt"/>
+        <line num="103" count="60" type="cond" truecount="1" falsecount="0"/>
+        <line num="104" count="60" type="stmt"/>
+        <line num="109" count="60" type="cond" truecount="3" falsecount="0"/>
+        <line num="111" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="112" count="2" type="stmt"/>
+        <line num="114" count="9" type="stmt"/>
+        <line num="115" count="9" type="stmt"/>
+        <line num="117" count="49" type="stmt"/>
+        <line num="118" count="49" type="stmt"/>
+        <line num="121" count="60" type="stmt"/>
+        <line num="124" count="60" type="stmt"/>
+        <line num="140" count="11" type="stmt"/>
+        <line num="141" count="11" type="stmt"/>
+        <line num="143" count="11" type="stmt"/>
+        <line num="158" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="164" count="15" type="stmt"/>
+        <line num="165" count="15" type="stmt"/>
+        <line num="166" count="15" type="stmt"/>
+        <line num="168" count="15" type="stmt"/>
+        <line num="184" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="189" count="2" type="stmt"/>
+        <line num="199" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="204" count="12" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

@@ -5,10 +5,6 @@ Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in
 
 ## Development environment setup
 
-> **[?]**
-> Proceed to describe how to setup local development environment.
-> e.g:
-
 To set up a development environment, please follow these steps:
 
 1. Clone the repo
@@ -48,7 +44,7 @@ Even better: You could submit a pull request with a fix or new feature!
 [pull requests](https://github.com/metaloha/color2color/pulls)
 that relates to your submission. You don't want to duplicate effort.
 2. Fork the project
-3. Create your feature branch (`git checkout -b feat/amazing_feature`)
-4. Commit your changes (`git commit -m 'feat: add amazing_feature'`)
-5. Push to the branch (`git push origin feat/amazing_feature`)
+3. Create your feature branch (`git checkout -b amazing_feature`)
+4. Commit your changes (`git commit -m 'add amazing_feature'`)
+5. Push to the branch (`git push origin amazing_feature`)
 6. Open a pull request

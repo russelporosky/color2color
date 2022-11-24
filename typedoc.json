@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["./src"],
+  "entryPointStrategy": "expand",
+  "exclude": ["**/*+(index|.spec|.e2e).ts"],
+  "includeVersion": true,
+  "out": "./documentation",
+  "searchInComments": true,
+  "tsconfig": "./src/tsconfig.app.json"
+}
