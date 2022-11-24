@@ -1,9 +1,8 @@
 {
   "name": "colorcolor",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "colorcolor converts Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB/HWB color strings to Hex/HexA/RGB/RGBA/HSL/HSLA/HSV/HSB/HWB color strings.",
   "main": "./dist/colorcolor.cjs",
-  "module": "./dist/colorcolor.es.js",
   "types": "./dist/colorcolor.d.ts",
   "scripts": {
     "build": "npm run clean && npm run rollup && copyfiles -f ./dist/src/colorcolor.d.ts ./dist && copyfiles -f ./dist/src/colors.d.ts ./dist && rimraf ./dist/src",
@@ -32,7 +31,6 @@
     "url": "https://github.com/metaloha/color2color/issues"
   },
   "homepage": "http://metaloha.github.io/color2color/",
-  "type": "module",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^23.0.2",
     "@rollup/plugin-json": "^4.1.0",
